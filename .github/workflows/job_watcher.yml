@@ -1,0 +1,35 @@
+name: Myth ATS Job Watcher
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Automatically runs every 30 minutes
+  workflow_dispatch:        # Allows you to click "Run workflow" manually anytime
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Restore Seen Jobs Cache
+        uses: actions/cache@v4
+        with:
+          path: seen_jobs.db
+          key: seen-jobs-db-${{ github.run_id }}
+          restore-keys: |
+            seen-jobs-db-
+
+      - name: Run Job Watcher Pass
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python job_watcher.py --once

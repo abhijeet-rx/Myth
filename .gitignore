@@ -1,0 +1,10 @@
+# Secrets
+.env
+
+# Database & Runtime files
+seen_jobs.db
+.watcher.pid
+
+# Python cache
+__pycache__/
+*.pyc
