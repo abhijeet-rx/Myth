@@ -2,8 +2,13 @@ name: Myth ATS Job Watcher
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Automatically runs every 30 minutes
-  workflow_dispatch:        # Allows you to click "Run workflow" manually anytime
+    # Offset by 12 and 42 minutes to bypass GitHub Actions peak-load dropouts (never schedule at :00 or :30)
+    - cron: '12,42 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
 
 jobs:
   watch:
