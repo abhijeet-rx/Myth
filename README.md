@@ -60,7 +60,7 @@ Run Myth silently in the background on your machine (checks every 30 minutes):
 .\stop_background.ps1     # Stops background process
 ```
 
-### 4. Bulk Company Scanner (300+ Tech Firms)
+### 4. Bulk Company Scanner (880+ Tech Firms)
 Scan a master list of companies ([`company_list.txt`](company_list.txt)) to discover active ATS endpoints and fresh openings:
 ```powershell
 py bulk_scan_companies.py --fresh-only

@@ -275,11 +275,13 @@ def fetch_company_jobs(slug):
                     "age_hours": hrs,
                     "timing_str": t_str,
                 })
-            return "Greenhouse", results
+            if results:
+                return "Greenhouse", results
     except Exception:
         pass
 
     # 2. Try Ashby
+    results = []
     ab_url = f"https://api.ashbyhq.com/posting-api/job-board/{slug_clean}"
     try:
         r = requests.get(ab_url, headers=HEADERS, timeout=8)
@@ -298,11 +300,13 @@ def fetch_company_jobs(slug):
                     "age_hours": hrs,
                     "timing_str": t_str,
                 })
-            return "Ashby", results
+            if results:
+                return "Ashby", results
     except Exception:
         pass
 
     # 3. Try Lever
+    results = []
     lv_url = f"https://api.lever.co/v0/postings/{slug_clean}?mode=json"
     try:
         r = requests.get(lv_url, headers=HEADERS, timeout=12)
@@ -319,11 +323,13 @@ def fetch_company_jobs(slug):
                     "age_hours": hrs,
                     "timing_str": t_str,
                 })
-            return "Lever", results
+            if results:
+                return "Lever", results
     except Exception:
         pass
 
     # 4. Try SmartRecruiters
+    results = []
     sr_url = f"https://api.smartrecruiters.com/v1/companies/{slug_clean}/postings"
     try:
         r = requests.get(sr_url, headers=HEADERS, timeout=10)
@@ -346,7 +352,8 @@ def fetch_company_jobs(slug):
                         "age_hours": hrs,
                         "timing_str": t_str,
                     })
-                return "SmartRecruiters", results
+                if results:
+                    return "SmartRecruiters", results
     except Exception:
         pass
 
