@@ -2,8 +2,8 @@ name: Myth ATS Job Watcher
 
 on:
   schedule:
-    # Offset by 12 and 42 minutes to bypass GitHub Actions peak-load dropouts (never schedule at :00 or :30)
-    - cron: '12,42 * * * *'
+    # Runs every 15 minutes (offset by 7 minutes to bypass GitHub Actions peak queue dropouts)
+    - cron: '7,22,37,52 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -26,7 +26,8 @@ jobs:
         run: pip install requests
 
       - name: Restore Seen Jobs Cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
+        id: cache-restore
         with:
           path: seen_jobs.db
           key: seen-jobs-db-${{ github.run_id }}
@@ -38,3 +39,10 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python job_watcher.py --once
+
+      - name: Save Seen Jobs Cache
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: seen_jobs.db
+          key: seen-jobs-db-${{ github.run_id }}

@@ -474,8 +474,8 @@ LOCATIONS = [
     "work from home",
 ]  # lowercase substrings; leave empty [] for any location
 
-MAX_AGE_HOURS = 6.0   # STRICT RULE: Throw out all postings older than 6 hours
-POLL_SECONDS = 1800   # Scan every 30 minutes (30m * 60s)
+MAX_AGE_HOURS = 24.0  # STRICT RULE: Throw out all postings older than 24 hours
+POLL_SECONDS = 900    # Scan every 15 minutes (15m * 60s)
 DB_PATH = "seen_jobs.db"
 # --------------------------------------------------------------------------
 
@@ -683,7 +683,7 @@ def matches(job, enforce_max_age=True, max_age_hours=MAX_AGE_HOURS):
 
 def notify(job, dry_run=False):
     text = (
-        f"🎯 [New Fresher Job Match (< 6h Old)]\n"
+        f"🎯 [New Fresher Job Match (< 24h Old)]\n"
         f"Role: {job['title']}\n"
         f"Company: {job['company']} ({job['source']})\n"
         f"Location: {job['location'] or 'Unspecified'}\n"
@@ -698,7 +698,7 @@ def notify(job, dry_run=False):
         return
 
     tg_html = (
-        f"🎯 <b>New Fresher Job Match (&lt; 6h Old)</b>\n\n"
+        f"🎯 <b>New Fresher Job Match (&lt; 24h Old)</b>\n\n"
         f"<b>Role:</b> {job['title']}\n"
         f"<b>Company:</b> {job['company']} ({job['source']})\n"
         f"<b>Location:</b> {job['location'] or 'Unspecified'}\n"

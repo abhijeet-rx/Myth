@@ -11,7 +11,8 @@ Myth is curated specifically for:
 * **Domain:** Java Developer, Full-Stack, Backend, Frontend (Java, Spring Boot, React, Node, REST APIs)
 * **Target Roles:** Software Development Engineer (SDE / SWE / SDE 1), Associate Software Engineer, Member of Technical Staff (MTS), Graduate Engineer Trainee (GET), Frontend Developer, Backend Developer, Full-Stack Developer, Engineering Intern.
 * **Strict Exclusions:** All senior, staff, lead, principal, architect, manager, and multi-year experienced positions (`SDE II`, `SWE 2`, `Level 2+`, etc.), as well as non-tech roles (sales, HR, marketing, UI/UX design, customer support).
-* **Strict Freshness Rule:** Only openings posted within the last **6 hours** (`MAX_AGE_HOURS = 6.0`) trigger alerts. Older active roles are filtered out so you are always among the first applicants.
+* **Strict Freshness Rule:** Only openings posted within the last **24 hours** (`MAX_AGE_HOURS = 24.0`) trigger alerts. Older active roles are filtered out.
+* **Zero Duplicates:** Tracks every seen job ID in SQLite (`seen_jobs.db`). A job is only ever notified once and never repeated.
 * **Locations:** India (Bengaluru, Hyderabad, Pune, Delhi NCR, Noida, Gurgaon, Chennai, Mumbai, Kolkata, Ahmedabad) & Global Remote / Work-From-Home.
 
 ---
@@ -21,14 +22,14 @@ Myth is curated specifically for:
 ```mermaid
 flowchart LR
     A["Public ATS APIs<br/>(Greenhouse, Ashby, Lever, SmartRecruiters)"] --> B["Myth Filter Engine"]
-    B -->|Keywords & Location & <= 6h| C{"Seen in SQLite DB?<br/>(seen_jobs.db)"}
+    B -->|Keywords & Location & <= 24h| C{"Seen in SQLite DB?<br/>(seen_jobs.db)"}
     C -->|Already Seen| D["Skip / Record"]
     C -->|New Match| E["Telegram Bot Alert<br/>(Role, Company, IST Time, Apply Link)"]
 ```
 
 1. **Direct Public ATS API Polling:** Instead of scraping heavy frontend DOMs or triggering CAPTCHA blocks, Myth queries official ATS JSON APIs.
-2. **Instant Telegram Alerts:** When a job matches your profile and is $\le$ 6 hours old, an HTML-formatted alert is dispatched directly to your Telegram chat with the posting timestamp in IST and direct application link.
-3. **Automated 24/7 Cloud Monitoring:** Runs via GitHub Actions cron twice every hour (`:12` and `:42` UTC offset), preserving history across runs with GitHub Cache.
+2. **Instant Telegram Alerts:** When a job matches your profile, is $\le$ 24 hours old, and has not been sent before, an HTML-formatted alert is dispatched directly to your Telegram chat with the posting timestamp in IST and direct application link.
+3. **Automated 24/7 Cloud Monitoring:** Runs via GitHub Actions cron every 15 minutes (`7,22,37,52 * * * *`), preserving history across runs with GitHub Actions cache.
 
 ---
 
@@ -37,7 +38,7 @@ flowchart LR
 ### 1. On-Demand Single Company Search
 Search any company's job board live across Greenhouse, Ashby, Lever, and SmartRecruiters:
 ```powershell
-# Check for fresh openings (< 6 hours old)
+# Check for fresh openings (< 24 hours old)
 py search_company.py stripe
 
 # Include all active openings (regardless of posting age)
@@ -54,7 +55,7 @@ py job_watcher.py --dry-run
 ```
 
 ### 3. Local Background Watcher (Windows)
-Run Myth silently in the background on your machine (checks every 30 minutes):
+Run Myth silently in the background on your machine (checks every 15 minutes):
 ```powershell
 .\start_background.ps1    # Starts silent background process
 .\stop_background.ps1     # Stops background process

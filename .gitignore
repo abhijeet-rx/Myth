@@ -1,8 +1,7 @@
 # Secrets
 .env
 
-# Database & Runtime files
-seen_jobs.db
+# Runtime files
 .watcher.pid
 
 # Python cache

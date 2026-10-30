@@ -230,7 +230,7 @@ LOCATIONS = [
     "work from home",
 ]
 
-MAX_AGE_HOURS = 6.0  # STRICT RULE: Throw out any jobs older than 6 hours
+MAX_AGE_HOURS = 24.0  # STRICT RULE: Throw out any jobs older than 24 hours
 
 def parse_timing(dt_val):
     if not dt_val:
@@ -405,7 +405,7 @@ def main():
     matched.sort(key=lambda x: x["age_hours"] if x["age_hours"] is not None else 999)
 
     print(f"\n=======================================================")
-    print(f"MATCHES FOR ABHIJEET ({'All Active' if args.all else '< 6 Hours Old'}): {len(matched)}")
+    print(f"MATCHES FOR ABHIJEET ({'All Active' if args.all else '< 24 Hours Old'}): {len(matched)}")
     print(f"=======================================================\n")
 
     for idx, job in enumerate(matched, 1):

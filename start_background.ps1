@@ -15,6 +15,6 @@ $proc.Id | Out-File -FilePath $PID_FILE -Encoding utf8
 
 Write-Host "[+] Myth Job Watcher started in background!" -ForegroundColor Green
 Write-Host "    PID: $($proc.Id)"
-Write-Host "    Poll Interval: Every 30 minutes"
+Write-Host "    Poll Interval: Every 15 minutes"
 Write-Host "    Telegram alerts: Enabled"
 Write-Host "    To stop it anytime, run: .\stop_background.ps1"
