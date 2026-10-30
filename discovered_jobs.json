@@ -1,0 +1,270 @@
+{
+  "scan_time": "2026-10-29T21:13:31.707935+05:30",
+  "total_companies_scanned": 331,
+  "discovered_boards_count": 30,
+  "discovered_boards": {
+    "ThoughtWorks": {
+      "platform": "Greenhouse",
+      "slug": "thoughtworks",
+      "total_jobs": 49
+    },
+    "N-iX": {
+      "platform": "Greenhouse",
+      "slug": "nix",
+      "total_jobs": 138
+    },
+    "Sutherland Global Services": {
+      "platform": "SmartRecruiters",
+      "slug": "sutherland",
+      "total_jobs": 100
+    },
+    "Atos Syntel": {
+      "platform": "SmartRecruiters",
+      "slug": "atossyntel",
+      "total_jobs": 1
+    },
+    "Kellton Tech": {
+      "platform": "SmartRecruiters",
+      "slug": "kelltontech",
+      "total_jobs": 10
+    },
+    "CSS Corp": {
+      "platform": "Greenhouse",
+      "slug": "css",
+      "total_jobs": 31
+    },
+    "Zifo RnD Solutions": {
+      "platform": "Workable",
+      "slug": "zifo",
+      "total_jobs": 10
+    },
+    "Netcracker Technology": {
+      "platform": "Greenhouse",
+      "slug": "netcracker",
+      "total_jobs": 14
+    },
+    "Sutherland Providers": {
+      "platform": "SmartRecruiters",
+      "slug": "sutherland",
+      "total_jobs": 100
+    },
+    "Wavicle Data Solutions": {
+      "platform": "Lever",
+      "slug": "wavicledata",
+      "total_jobs": 5
+    },
+    "Sutherland Global Service": {
+      "platform": "SmartRecruiters",
+      "slug": "sutherland",
+      "total_jobs": 100
+    },
+    "Appnovation": {
+      "platform": "Greenhouse",
+      "slug": "appnovation",
+      "total_jobs": 41
+    },
+    "Euphoric Thought Technologies": {
+      "platform": "Ashby",
+      "slug": "euphoric",
+      "total_jobs": 5
+    },
+    "ELEKS": {
+      "platform": "Lever",
+      "slug": "eleks",
+      "total_jobs": 19
+    },
+    "Wipro Limited": {
+      "platform": "SmartRecruiters",
+      "slug": "wiprolimited",
+      "total_jobs": 1
+    },
+    "Alight Solutions": {
+      "platform": "SmartRecruiters",
+      "slug": "alight",
+      "total_jobs": 2
+    },
+    "Nous Infosystems": {
+      "platform": "SmartRecruiters",
+      "slug": "nousinfosystems",
+      "total_jobs": 2
+    },
+    "Infinite Computer Solutions": {
+      "platform": "Ashby",
+      "slug": "infinite",
+      "total_jobs": 3
+    },
+    "Zinnov Management Consulting": {
+      "platform": "Greenhouse",
+      "slug": "zinnov",
+      "total_jobs": 37
+    },
+    "Gateway Group": {
+      "platform": "Greenhouse",
+      "slug": "gateway",
+      "total_jobs": 2
+    },
+    "Clarion Technologies": {
+      "platform": "Ashby",
+      "slug": "clarion",
+      "total_jobs": 8
+    },
+    "ValueLabs": {
+      "platform": "SmartRecruiters",
+      "slug": "valuelabs",
+      "total_jobs": 1
+    },
+    "Azilen Technologies": {
+      "platform": "SmartRecruiters",
+      "slug": "azilen",
+      "total_jobs": 1
+    },
+    "Space-O Technologies": {
+      "platform": "Greenhouse",
+      "slug": "space",
+      "total_jobs": 8
+    },
+    "Valtech (France)": {
+      "platform": "Greenhouse",
+      "slug": "valtech",
+      "total_jobs": 121
+    },
+    "DRC Systems": {
+      "platform": "Greenhouse",
+      "slug": "drc",
+      "total_jobs": 1
+    },
+    "Prompt Softech": {
+      "platform": "Ashby",
+      "slug": "prompt",
+      "total_jobs": 48
+    },
+    "Alten Group (France)": {
+      "platform": "SmartRecruiters",
+      "slug": "alten",
+      "total_jobs": 100
+    },
+    "Endava (UK)": {
+      "platform": "SmartRecruiters",
+      "slug": "endava",
+      "total_jobs": 100
+    },
+    "Sigma Software (Ukraine)": {
+      "platform": "SmartRecruiters",
+      "slug": "sigmasoftware",
+      "total_jobs": 1
+    }
+  },
+  "matched_jobs_count": 11,
+  "matched_jobs": [
+    {
+      "platform": "SmartRecruiters",
+      "company": "Sutherland Global Services",
+      "board_slug": "sutherland",
+      "title": "Software Full stack Developer",
+      "location": "Bengaluru, KA, in",
+      "url": "https://jobs.smartrecruiters.com/sutherland/744000158477608",
+      "age_hours": 5.533855262222223,
+      "timing_str": "5.5 hrs ago (29 Oct, 03:36 PM IST)"
+    },
+    {
+      "platform": "SmartRecruiters",
+      "company": "Sutherland Providers",
+      "board_slug": "sutherland",
+      "title": "Software Full stack Developer",
+      "location": "Bengaluru, KA, in",
+      "url": "https://jobs.smartrecruiters.com/sutherland/744000158477608",
+      "age_hours": 5.549687735555556,
+      "timing_str": "5.5 hrs ago (29 Oct, 03:36 PM IST)"
+    },
+    {
+      "platform": "SmartRecruiters",
+      "company": "Sutherland Global Service",
+      "board_slug": "sutherland",
+      "title": "Software Full stack Developer",
+      "location": "Bengaluru, KA, in",
+      "url": "https://jobs.smartrecruiters.com/sutherland/744000158477608",
+      "age_hours": 5.551801792777778,
+      "timing_str": "5.6 hrs ago (29 Oct, 03:36 PM IST)"
+    },
+    {
+      "platform": "Greenhouse",
+      "company": "Zinnov Management Consulting",
+      "board_slug": "zinnov",
+      "title": "Intern - People Success Partner",
+      "location": "Koramangala, Bangalore, Karnataka, India",
+      "url": "https://job-boards.greenhouse.io/zinnov/jobs/4410816009",
+      "age_hours": 79.1327612838889,
+      "timing_str": "3d ago (26 Oct, 02:03 PM IST)"
+    },
+    {
+      "platform": "Greenhouse",
+      "company": "Zinnov Management Consulting",
+      "board_slug": "zinnov",
+      "title": "Intern - People Success Partner",
+      "location": "Koramangala, Bangalore, Karnataka, India",
+      "url": "https://job-boards.greenhouse.io/zinnov/jobs/4410815009",
+      "age_hours": 561.986372395,
+      "timing_str": "23d ago (06 Oct, 11:11 AM IST)"
+    },
+    {
+      "platform": "Lever",
+      "company": "ELEKS",
+      "board_slug": "eleks",
+      "title": "EagleSTAR, Trainee FE Developer, JR820",
+      "location": "Remote (Ukraine)",
+      "url": "https://jobs.lever.co/eleks/3640629b-ee2d-49b4-92c5-8f33e0df2521",
+      "age_hours": 583.0276867233333,
+      "timing_str": "24d ago (05 Oct, 02:08 PM IST)"
+    },
+    {
+      "platform": "Greenhouse",
+      "company": "Zinnov Management Consulting",
+      "board_slug": "zinnov",
+      "title": "Intern - Employer Branding",
+      "location": "Hyderabad",
+      "url": "https://job-boards.greenhouse.io/zinnov/jobs/4412599009",
+      "age_hours": 727.3999835061111,
+      "timing_str": "1mo ago (29 Sep, 01:47 PM IST)"
+    },
+    {
+      "platform": "Greenhouse",
+      "company": "Zinnov Management Consulting",
+      "board_slug": "zinnov",
+      "title": "Intern - Employer Branding",
+      "location": "Koramangala, Bangalore, Karnataka, India",
+      "url": "https://job-boards.greenhouse.io/zinnov/jobs/4412579009",
+      "age_hours": 871.2227612838889,
+      "timing_str": "1mo ago (23 Sep, 01:57 PM IST)"
+    },
+    {
+      "platform": "Greenhouse",
+      "company": "Valtech (France)",
+      "board_slug": "valtech",
+      "title": "Internal Auditor",
+      "location": "Bengaluru",
+      "url": "https://job-boards.eu.greenhouse.io/valtech/jobs/4948326101",
+      "age_hours": 1708.1273053708333,
+      "timing_str": "2mo ago (19 Aug, 05:05 PM IST)"
+    },
+    {
+      "platform": "Ashby",
+      "company": "Euphoric Thought Technologies",
+      "board_slug": "euphoric",
+      "title": "Software Engineer (Applied AI)",
+      "location": "Portugal (Remote)",
+      "url": "https://jobs.ashbyhq.com/euphoric/4a2e6a4d-1e33-4ffd-8d3b-ab9f68900acf",
+      "age_hours": 3312.761494530278,
+      "timing_str": "4mo ago (13 Jun, 08:24 PM IST)"
+    },
+    {
+      "platform": "Ashby",
+      "company": "Euphoric Thought Technologies",
+      "board_slug": "euphoric",
+      "title": "Software Engineer (Applied AI)",
+      "location": "United Kingdom (Remote)",
+      "url": "https://jobs.ashbyhq.com/euphoric/f6be1277-26aa-4046-b739-f97338ae4e08",
+      "age_hours": 5859.470143141389,
+      "timing_str": "8mo ago (27 Feb, 05:41 PM IST)"
+    }
+  ]
+}

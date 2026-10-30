@@ -1,0 +1,387 @@
+Accenture
+Tata Consultancy Services (TCS)
+Infosys
+Wipro
+HCL Technologies
+Cognizant
+Capgemini
+IBM
+Deloitte (consulting & tech)
+PwC (consulting & tech)
+EY (Ernst & Young)
+KPMG
+NTT DATA
+Tech Mahindra
+LTIMindtree (LTI / Mindtree merged)
+Mphasis
+Hexaware Technologies
+Mindtree
+Persistent Systems
+Birlasoft
+Sonata Software
+Cyient
+NIIT Technologies (now NIIT)
+Oracle (services/consulting)
+CGI
+Atos
+Fujitsu
+DXC Technology
+WNS Global Services
+EXL Service
+Virtusa
+UST
+Sopra Steria
+Zensar Technologies
+GlobalLogic
+Cigniti
+Ness Digital Engineering
+ThoughtWorks
+Luxoft (part of DXC)
+Coforge (formerly NIIT Tech spin/related)
+Sutherland Global Services
+TietoEVRY
+KPIT Technologies
+Happiest Minds Technologies
+Mastek
+eClerx
+Firstsource Solutions
+Hinduja Global Solutions (HGS)
+Concentrix
+Nagarro
+Zifo RnD Solutions
+Brookfield Global Relocations
+Altran (part of Capgemini)
+U-blox
+L&T Technology Services
+Techwave Consulting
+Expleo Group
+NTT DATA Services
+UST Global
+Coforge
+Genpact
+Microland
+Intellect Design Arena
+Sapiens International Corporation
+EPAM Systems
+Luxoft
+Software AG
+N-iX
+Globant
+Softvision (Globant)
+Altimetrik
+iGate
+Atos Syntel
+Fractal Analytics
+QA Infotech
+SoftServe
+Hinduja Global Solutions
+Intelliswift Software
+Oracle Financial Services Software Ltd.
+Cybage Software
+Intellect Design Arena Ltd.
+Sapiens International Corporation Ltd.
+QA-Infotech
+Kellton Tech
+Cybage
+Polaris Consulting & Services Ltd.
+Xpanxion
+Trigent Software
+Datamatics Global Services
+Infogain
+CSS Corp
+Softtech Engineers Ltd.
+R Systems International Ltd.
+3i InfoTech
+Cambrio
+Icertis (services & consulting)
+SoftVision
+Intact Digital (IT services)
+Aricent Technologies
+Zensar
+SoftBank Engineering Services
+PixelCrayons
+iCertis
+Intact Digital
+ValueCoders
+Master Infotech
+Finoit
+InData Labs
+iCreativez
+Devout Tech Consultants
+Digital Bharat Agency
+Netcracker Technology
+Sutherland Providers
+Optimizely Consulting Services
+iTech US
+Altran
+QA Tech Services
+CoreLogic
+Luxoft
+Infostretch Corporation
+DataArt
+Ness Digital Engineering
+Netronome
+MediaAgility Consulting
+YASH Technologies
+Sutherland Global Service
+TechAhead
+Xicom Technologies
+The NineHertz
+Radixweb
+OnGraph Technologies
+Algoworks
+AppInventiv
+Mobisoft Infotech
+Fingent
+i2k2 Networks
+Affirma
+Dotsquares
+TraceLink
+MTOAG Technologies
+Aufait Technologies
+QUEST Global
+Rishabh Software
+Excellent WebWorld
+Ibexlabs
+Girikon
+Wavicle Data Solutions
+Euphoric Thought Technologies
+Simform
+Ray Business Technologies
+Quytech
+Concetto Labs
+Salt Technologies
+eSparkBiz
+Grazitti Interactive
+Avisoft
+Cyber Infrastructure (CIS)
+TatvaSoft
+WHMCS Global Services
+Crowe
+Grant Thornton
+PKF International
+Crowe (Tech Services)
+Grant Thornton (Tech & Consulting)
+PKF International (IT Consulting)
+Computools
+Yondu
+SoftwareONE
+Pythian
+Softchoice
+Zones
+Optiv
+ELEKS
+Appnovation
+Itransition
+Altran Technologies
+CGI Inc.
+Atos SE
+NTT DATA Corporation
+Tech Mahindra Ltd.
+Fujitsu Ltd.
+Hitachi Ltd.
+Siemens AG (Digital Services)
+Oracle Corporation (Services)
+Hewlett Packard Enterprise (Services)
+Dell Technologies (Services)
+SAP SE (Services/Consulting)
+Salesforce (Services & Consulting)
+Cognizant Technology Solutions (Services)
+Veritas Technologies (Consulting/Services)
+Wipro Limited
+Infosys Limited
+Accenture plc
+Booz Allen Hamilton (Consulting/Services)
+Capgemini SE
+Slalom Consulting
+Publicis Sapient
+Protiviti (Consulting/Tech Services)
+Gartner Inc. (Advisory & Technology Services)
+McKinsey & Company (Technology Services)
+Boston Consulting Group (BCG) - Technology Services
+Deloitte Consulting LLP (Services)
+EY (Ernst & Young) Global Services
+KPMG Advisory Services
+Alight Solutions
+Avalara (Consulting & Tax Services)
+UXRTECH (Services)
+ThoughtWorks Inc.
+Globant SA
+EPAM Systems Inc.
+Luxoft (a DXC company)
+SoftServe Inc.
+DataArt Inc.
+Appnovation Technologies
+SoftwareONE Group
+Pythian Group Inc.
+Softchoice Corporation
+Zones LLC
+Optiv Security Inc.
+ELEKS - Global Services & Solutions
+Itransition Group
+Tata Elxsi
+L&T Technology Services (LTTS)
+Finoit Technologies
+AppInventiv Technologies
+Fingent (India)
+Saltt Tech
+Synoptek (India operations)
+Wavicle Data Solutions (India)
+3i Infotech Ltd
+R Systems International Ltd
+Infinite Computer Solutions
+Kellton Tech Solutions
+Cybage Software Pvt Ltd
+Incedo Inc
+Indium Software
+Aspire Systems
+Fission Labs
+RapidValue Solutions
+Nous Infosystems
+ITC Infotech
+Harman Connected Services
+Robosoft Technologies
+Brillio Technologies
+Zinnov Management Consulting
+Sonata Software Ltd
+Coforge Ltd
+Birlasoft Ltd
+Clover Infotech
+Newgen Software Technologies
+Majesco
+Xoriant
+Allerin Tech
+Nagarro India
+Innominds
+Mobinius Technologies
+Saviant Consulting
+Searce
+Blazeclan Technologies
+CloudThat Technologies
+Envestnet Yodlee
+MetricStream
+Cyient Ltd
+VVDN Technologies
+Sasken Technologies
+Infogain India
+Happiest Technologies
+Encora Digital
+Qburst Technologies
+SourceFuse
+Tismo Technology Solutions
+iLink Digital
+Yethi Consulting
+Aujas Cybersecurity
+WinWire Technologies
+Cygnet Infotech
+Evoke Technologies
+Indus Net Technologies
+Encora Technologies
+Sensiple Software Solutions
+iNautix Technologies
+Object Edge
+eNoah iSolutions
+Algoscale Technologies
+Ilink Systems
+Qapitol QA
+Experion Technologies
+Nitor Infotech
+Infobahn Softworld
+Mindtree (LTIMindtree)
+Mastek Ltd
+VLink Inc
+Appstrail Technology
+eInfochips
+GAVS Technologies
+Altimetrik India
+Harman Connected India
+Zymr
+Tibil Solutions
+BluePi Consulting
+RapidOps
+Daffodil Software
+Appventurez
+MindBowser Infosolutions
+Clarion Technologies
+ValueLabs
+ToTheNew
+Coditas
+Srijan Technologies
+Softura
+Gateway Group
+KCS Technologies
+KnackForge
+NDimensionZ
+OpenXcell
+Space-O Technologies
+Peerbits
+Technostacks Infotech
+Crest Data Systems
+Saviant Tech
+Zymr Inc
+SPEC India
+Bacancy Technology
+Innostax Software Labs
+AppitSimple Infotek (CallHippo)
+NetWeb Software
+IndiaNIC Infotech
+WeblineIndia
+Systematix Infotech
+Aegis Soft Tech
+Multidots
+Simform India
+Azilen Technologies
+Rapidops Solutions
+MindInventory
+Zealous System
+Narola Infotech
+Hidden Brains Infotech
+iCreative Technologies
+Intuz
+DRC Systems
+WebOccult Technologies
+Crest Infosystems
+Innowrap Technologies
+Technource
+Prompt Softech
+Perception System
+Softpulse Infotech
+Brainvire Infotech
+Arka Softwares
+RipenApps Technologies
+Hyperlink InfoSystem
+Codewave Technologies
+GoodWorkLabs
+T-Systems (Germany)
+Netguru (Poland)
+Valtech (France)
+Logicalis (UK)
+Bechtle AG (Germany)
+Inetum (France)
+Alten Group (France)
+Atea ASA (Norway)
+NNIT (Denmark)
+Capita PLC (UK)
+Wavestone (France)
+Modis (Global)
+Kyndryl (USA)
+Leidos (USA)
+SAIC (USA)
+Endava (UK)
+Intellias (Ukraine)
+Sigma Software (Ukraine)
+Ciklum (Global)
+Netcompany Group (Denmark)
+MentorMate
+Oxagile
+Innowise Group
+Artezio
+Diceus
+Yalantis
+Herjavec Group
+Altoros
+Software Mind S.A.
+Bouvet ASA
+Castellum Inc
+Grid Dynamics Holdings Inc
+Motherson Technology

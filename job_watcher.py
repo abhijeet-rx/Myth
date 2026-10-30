@@ -24,6 +24,7 @@ Usage:
 import argparse
 import datetime
 import os
+import re
 import sqlite3
 import sys
 import time
@@ -37,7 +38,7 @@ if sys.platform == "win32":
 
 import requests
 
-# ---- CONFIG: Curated for Abhijeet Singh ----
+# ---- CONFIG: Curated for Abhijeet Singh (4th Year Fresher - Java / Full-Stack / Backend / Frontend) ----
 COMPANIES = {
     "greenhouse": [
         "stripe",
@@ -53,6 +54,17 @@ COMPANIES = {
         "figma",
         "brex",
         "affirm",
+        "thoughtworks",
+        "coinbase",
+        "valtech",
+        "netcracker",
+        "nix",
+        "appnovation",
+        "css",
+        "zinnov",
+        "drc",
+        "space",
+        "gateway",
     ],
     "ashby": [
         "openai",
@@ -62,55 +74,201 @@ COMPANIES = {
         "modal",
         "cursor",
         "linear",
+        "clarion",
+        "prompt",
+        "euphoric",
+        "infinite",
     ],
     "lever": [
         "palantir",
         "spotify",
+        "eleks",
+        "wavicledata",
+    ],
+    "smartrecruiters": [
+        "sutherland",
+        "kelltontech",
+        "endava",
+        "alten",
+        "nousinfosystems",
+        "atossyntel",
+        "azilen",
+        "valuelabs",
+        "sigmasoftware",
     ],
 }
 
 KEYWORDS = [
+    # General engineering titles freshers/colleges get hired for
     "software engineer",
     "software developer",
     "sde",
-    "backend",
-    "back end",
-    "front end",
-    "frontend",
+    "swe",
+    "programmer",
+    "developer",
+    "engineer",
+    "member of technical staff",
+    "mts",
+    # Specific tech stack: Java / Full Stack / Frontend / Backend / Web
+    "java",
     "full stack",
     "full-stack",
     "fullstack",
-    "java",
+    "backend",
+    "back end",
+    "back-end",
+    "frontend",
+    "front end",
+    "front-end",
+    "web developer",
+    "react",
+    "node",
+    "spring",
+    "springboot",
+    # Entry-level / Fresher / College campus specifics
     "intern",
     "internship",
     "new grad",
+    "graduate",
+    "entry level",
+    "entry-level",
     "early career",
+    "campus",
+    "fresher",
     "trainee",
+    "apprentice",
+    "associate engineer",
+    "associate software",
+    "associate developer",
+    "junior",
+    "jr.",
+    "jr ",
+    "sde 1",
+    "sde i",
+    "sde-1",
+    "sde-i",
+    "swe 1",
+    "swe i",
+    "swe-1",
+    "swe-i",
+    "engineer 1",
+    "engineer i",
 ]
 
 EXCLUDE = [
+    # Seniority & Experienced levels (strictly excluded for 0-exp / fresher)
     "senior",
     "sr.",
     "sr ",
+    "sr-",
     "staff",
     "principal",
-    "manager",
-    "director",
     "lead",
-    "vp",
-    "head of",
+    "tech lead",
+    "team lead",
     "architect",
+    "director",
+    "manager",
+    "head of",
+    "vp",
+    "vice president",
+    "fellow",
+    "distinguished",
+    "expert",
+    "sde ii",
+    "sde-ii",
+    "sde 2",
+    "sde-2",
+    "sde iii",
+    "sde-3",
+    "sde 3",
+    "sde iv",
+    "swe ii",
+    "swe-ii",
+    "swe 2",
+    "swe-2",
+    "swe iii",
+    "software engineer ii",
+    "software engineer 2",
+    "software engineer iii",
+    "software engineer 3",
+    "engineer ii",
+    "engineer 2",
+    "engineer iii",
+    "engineer 3",
+    "mid-level",
+    "mid level",
+    "experienced",
+    # Non-software engineering disciplines
+    "mechanical",
+    "electrical",
+    "civil",
+    "chemical",
+    "hardware",
+    "network engineer",
+    # Non-tech / Unrelated tracks
     "sales",
     "account executive",
     "recruiter",
     "sourcer",
+    "talent acquisition",
     "marketing",
     "legal",
     "operations",
-    "analyst",
+    "finance",
+    "accounting",
     "product manager",
     "designer",
+    "ui/ux",
+    "content",
+    "hr ",
+    "human resources",
+    "business analyst",
+    "customer support",
+    "technical support",
+    "help desk",
+    "helpdesk",
 ]
+
+# Whole-word token exclusions to catch "Sr", "II", "Lead", "Analytics", etc. accurately
+EXCLUDE_WORDS = {
+    "senior",
+    "sr",
+    "staff",
+    "principal",
+    "lead",
+    "director",
+    "manager",
+    "vp",
+    "architect",
+    "fellow",
+    "expert",
+    "ii",
+    "iii",
+    "iv",
+    "experienced",
+    "mechanical",
+    "electrical",
+    "civil",
+    "chemical",
+    "hardware",
+    "sales",
+    "recruiter",
+    "sourcer",
+    "marketing",
+    "legal",
+    "finance",
+    "accounting",
+    "designer",
+    "analytics",
+    "analyst",
+    "scrum",
+    "hr",
+    "auditor",
+    "audit",
+    "compliance",
+    "tax",
+}
 
 LOCATIONS = [
     "india",
@@ -118,10 +276,20 @@ LOCATIONS = [
     "bangalore",
     "hyderabad",
     "pune",
+    "delhi",
+    "noida",
+    "gurgaon",
+    "gurugram",
+    "chennai",
+    "mumbai",
+    "ahmedabad",
+    "kolkata",
     "remote",
+    "anywhere",
+    "work from home",
 ]  # lowercase substrings; leave empty [] for any location
 
-MAX_AGE_HOURS = 24.0  # Only alert on postings <= 24 hours old
+MAX_AGE_HOURS = 6.0   # STRICT RULE: Throw out all postings older than 6 hours
 POLL_SECONDS = 1800   # Scan every 30 minutes (30m * 60s)
 DB_PATH = "seen_jobs.db"
 # --------------------------------------------------------------------------
@@ -209,7 +377,7 @@ def fetch_lever(slug):
         f"https://api.lever.co/v0/postings/{slug}",
         params={"mode": "json"},
         headers=HEADERS,
-        timeout=25,
+        timeout=8,
     )
     r.raise_for_status()
     for j in r.json():
@@ -251,28 +419,66 @@ def fetch_ashby(slug):
         }
 
 
+def fetch_smartrecruiters(slug):
+    r = requests.get(
+        f"https://api.smartrecruiters.com/v1/companies/{slug}/postings",
+        headers=HEADERS,
+        timeout=15,
+    )
+    r.raise_for_status()
+    for j in r.json().get("content", []):
+        loc_obj = j.get("location") or {}
+        loc_parts = [p for p in [loc_obj.get("city"), loc_obj.get("region"), loc_obj.get("country")] if p]
+        loc = ", ".join(loc_parts) or "Unspecified"
+        if loc_obj.get("remote"):
+            loc = f"{loc} (Remote)".strip()
+        dt = parse_datetime(j.get("releasedDate"))
+        yield {
+            "id": f"sr:{slug}:{j.get('id')}",
+            "title": (j.get("name") or "").strip(),
+            "location": loc,
+            "url": f"https://jobs.smartrecruiters.com/{slug}/{j.get('id')}" if j.get("id") else "",
+            "company": slug.title(),
+            "source": "SmartRecruiters",
+            "posted_at": dt,
+            "timing_str": format_timing(dt),
+        }
+
+
 FETCHERS = {
     "greenhouse": fetch_greenhouse,
     "lever": fetch_lever,
     "ashby": fetch_ashby,
+    "smartrecruiters": fetch_smartrecruiters,
 }
 
 
 def matches(job, enforce_max_age=True):
     title = job["title"].lower()
     loc = job["location"].lower()
+
+    # 1. Whole-word and phrase exclusions for 0-experience fresher profile
+    words = set(re.findall(r"[a-zA-Z0-9]+", title))
+    if words.intersection(EXCLUDE_WORDS):
+        return False
     if any(x in title for x in EXCLUDE):
         return False
+
+    # 2. Tech stack and fresher target keywords
     if not any(k in title for k in KEYWORDS):
         return False
+
+    # 3. Location filter (India or Remote)
     if LOCATIONS and not any(l in loc for l in LOCATIONS):
         return False
     
-    # Strictly reject any job older than 24 hours
-    if enforce_max_age and job.get("posted_at"):
+    # 4. Strictly throw out any job older than MAX_AGE_HOURS (6 hours) or with unknown timestamp
+    if enforce_max_age:
+        if not job.get("posted_at"):
+            return False
         now_utc = datetime.datetime.now(datetime.timezone.utc)
         age_hours = (now_utc - job["posted_at"]).total_seconds() / 3600.0
-        if age_hours > MAX_AGE_HOURS:
+        if age_hours > MAX_AGE_HOURS or age_hours < -2.0:
             return False
 
     return True
@@ -280,7 +486,7 @@ def matches(job, enforce_max_age=True):
 
 def notify(job, dry_run=False):
     text = (
-        f"🎯 [New Job Match]\n"
+        f"🎯 [New Fresher Job Match (< 6h Old)]\n"
         f"Role: {job['title']}\n"
         f"Company: {job['company']} ({job['source']})\n"
         f"Location: {job['location'] or 'Unspecified'}\n"
@@ -295,7 +501,7 @@ def notify(job, dry_run=False):
         return
 
     tg_html = (
-        f"🎯 <b>New Job Match</b>\n\n"
+        f"🎯 <b>New Fresher Job Match (&lt; 6h Old)</b>\n\n"
         f"<b>Role:</b> {job['title']}\n"
         f"<b>Company:</b> {job['company']} ({job['source']})\n"
         f"<b>Location:</b> {job['location'] or 'Unspecified'}\n"

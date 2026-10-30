@@ -10,6 +10,7 @@ Usage:
 import argparse
 import datetime
 import os
+import re
 import sys
 import requests
 
@@ -39,19 +40,197 @@ IST_TZ = datetime.timezone(datetime.timedelta(hours=5, minutes=30))
 HEADERS = {"User-Agent": "job-watcher/1.0 (personal career researcher)"}
 
 KEYWORDS = [
-    "software engineer", "software developer", "sde", "backend", "back end",
-    "front end", "frontend", "full stack", "full-stack", "fullstack",
-    "java", "intern", "internship", "new grad", "early career", "trainee"
+    # General engineering titles freshers/colleges get hired for
+    "software engineer",
+    "software developer",
+    "sde",
+    "swe",
+    "programmer",
+    "developer",
+    "engineer",
+    "member of technical staff",
+    "mts",
+    # Specific tech stack: Java / Full Stack / Frontend / Backend / Web
+    "java",
+    "full stack",
+    "full-stack",
+    "fullstack",
+    "backend",
+    "back end",
+    "back-end",
+    "frontend",
+    "front end",
+    "front-end",
+    "web developer",
+    "react",
+    "node",
+    "spring",
+    "springboot",
+    # Entry-level / Fresher / College campus specifics
+    "intern",
+    "internship",
+    "new grad",
+    "graduate",
+    "entry level",
+    "entry-level",
+    "early career",
+    "campus",
+    "fresher",
+    "trainee",
+    "apprentice",
+    "associate engineer",
+    "associate software",
+    "associate developer",
+    "junior",
+    "jr.",
+    "jr ",
+    "sde 1",
+    "sde i",
+    "sde-1",
+    "sde-i",
+    "swe 1",
+    "swe i",
+    "swe-1",
+    "swe-i",
+    "engineer 1",
+    "engineer i",
 ]
 
 EXCLUDE = [
-    "senior", "sr.", "sr ", "staff", "principal", "manager", "director",
-    "lead", "vp", "head of", "architect", "sales", "account executive",
-    "recruiter", "sourcer", "marketing", "legal", "operations", "analyst",
-    "product manager", "designer"
+    # Seniority & Experienced levels (strictly excluded for 0-exp / fresher)
+    "senior",
+    "sr.",
+    "sr ",
+    "sr-",
+    "staff",
+    "principal",
+    "lead",
+    "tech lead",
+    "team lead",
+    "architect",
+    "director",
+    "manager",
+    "head of",
+    "vp",
+    "vice president",
+    "fellow",
+    "distinguished",
+    "expert",
+    "sde ii",
+    "sde-ii",
+    "sde 2",
+    "sde-2",
+    "sde iii",
+    "sde-3",
+    "sde 3",
+    "sde iv",
+    "swe ii",
+    "swe-ii",
+    "swe 2",
+    "swe-2",
+    "swe iii",
+    "software engineer ii",
+    "software engineer 2",
+    "software engineer iii",
+    "software engineer 3",
+    "engineer ii",
+    "engineer 2",
+    "engineer iii",
+    "engineer 3",
+    "mid-level",
+    "mid level",
+    "experienced",
+    # Non-software engineering disciplines
+    "mechanical",
+    "electrical",
+    "civil",
+    "chemical",
+    "hardware",
+    "network engineer",
+    # Non-tech / Unrelated tracks
+    "sales",
+    "account executive",
+    "recruiter",
+    "sourcer",
+    "talent acquisition",
+    "marketing",
+    "legal",
+    "operations",
+    "finance",
+    "accounting",
+    "product manager",
+    "designer",
+    "ui/ux",
+    "content",
+    "hr ",
+    "human resources",
+    "business analyst",
+    "customer support",
+    "technical support",
+    "help desk",
+    "helpdesk",
 ]
 
-LOCATIONS = ["india", "bengaluru", "bangalore", "hyderabad", "pune", "remote"]
+# Whole-word token exclusions to catch "Sr", "II", "Lead", "Analytics", etc. accurately
+EXCLUDE_WORDS = {
+    "senior",
+    "sr",
+    "staff",
+    "principal",
+    "lead",
+    "director",
+    "manager",
+    "vp",
+    "architect",
+    "fellow",
+    "expert",
+    "ii",
+    "iii",
+    "iv",
+    "experienced",
+    "mechanical",
+    "electrical",
+    "civil",
+    "chemical",
+    "hardware",
+    "sales",
+    "recruiter",
+    "sourcer",
+    "marketing",
+    "legal",
+    "finance",
+    "accounting",
+    "designer",
+    "analytics",
+    "analyst",
+    "scrum",
+    "hr",
+    "auditor",
+    "audit",
+    "compliance",
+    "tax",
+}
+
+LOCATIONS = [
+    "india",
+    "bengaluru",
+    "bangalore",
+    "hyderabad",
+    "pune",
+    "delhi",
+    "noida",
+    "gurgaon",
+    "gurugram",
+    "chennai",
+    "mumbai",
+    "ahmedabad",
+    "kolkata",
+    "remote",
+    "anywhere",
+    "work from home",
+]
+
+MAX_AGE_HOURS = 6.0  # STRICT RULE: Throw out any jobs older than 6 hours
 
 def parse_timing(dt_val):
     if not dt_val:
@@ -144,12 +323,39 @@ def fetch_company_jobs(slug):
     except Exception:
         pass
 
+    # 4. Try SmartRecruiters
+    sr_url = f"https://api.smartrecruiters.com/v1/companies/{slug_clean}/postings"
+    try:
+        r = requests.get(sr_url, headers=HEADERS, timeout=10)
+        if r.status_code == 200:
+            data = r.json().get("content", [])
+            if data:
+                for j in data:
+                    loc_obj = j.get("location") or {}
+                    loc_parts = [p for p in [loc_obj.get("city"), loc_obj.get("region"), loc_obj.get("country")] if p]
+                    loc = ", ".join(loc_parts) or "Unspecified"
+                    if loc_obj.get("remote"):
+                        loc = f"{loc} (Remote)".strip()
+                    hrs, t_str = parse_timing(j.get("releasedDate"))
+                    results.append({
+                        "source": "SmartRecruiters",
+                        "company": slug.title(),
+                        "title": (j.get("name") or "").strip(),
+                        "location": loc,
+                        "url": f"https://jobs.smartrecruiters.com/{slug_clean}/{j.get('id')}" if j.get("id") else "",
+                        "age_hours": hrs,
+                        "timing_str": t_str,
+                    })
+                return "SmartRecruiters", results
+    except Exception:
+        pass
+
     return None, []
 
 def main():
     parser = argparse.ArgumentParser(description="Search any company's job openings")
     parser.add_argument("company", help="Company name or slug (e.g. stripe, openai, swiggy, rubrik)")
-    parser.add_argument("--all", action="store_true", help="Include active jobs older than 24h")
+    parser.add_argument("--all", action="store_true", help="Include active jobs older than 6 hours")
     parser.add_argument("--send-tg", action="store_true", help="Send matches directly to Telegram bot")
     args = parser.parse_args()
 
@@ -157,7 +363,7 @@ def main():
     platform, all_jobs = fetch_company_jobs(args.company)
 
     if not platform:
-        print(f"[-] Could not find a public Greenhouse, Ashby, or Lever board for '{args.company}'.")
+        print(f"[-] Could not find a public Greenhouse, Ashby, Lever, or SmartRecruiters board for '{args.company}'.")
         print("    (Some companies use custom portals or different career slug names).")
         return
 
@@ -169,16 +375,22 @@ def main():
         t = j["title"].lower()
         loc = j["location"].lower()
 
+        # 1. Whole-word and phrase exclusions for 0-exp fresher
+        words = set(re.findall(r"[a-zA-Z0-9]+", t))
+        if words.intersection(EXCLUDE_WORDS):
+            continue
         if any(x in t for x in EXCLUDE):
             continue
+        # 2. Tech stack and target roles
         if not any(k in t for k in KEYWORDS):
             continue
+        # 3. Location filter
         if LOCATIONS and not any(l in loc for l in LOCATIONS):
             continue
         
-        # Check 24 hour threshold unless --all is specified
+        # STRICT 6-HOUR RULE: Throw out all jobs older than 6 hours (unless --all is specified)
         if not args.all:
-            if j["age_hours"] is not None and j["age_hours"] > 24.0:
+            if j["age_hours"] is None or j["age_hours"] > MAX_AGE_HOURS or j["age_hours"] < -2.0:
                 continue
 
         matched.append(j)
@@ -186,7 +398,7 @@ def main():
     matched.sort(key=lambda x: x["age_hours"] if x["age_hours"] is not None else 999)
 
     print(f"\n=======================================================")
-    print(f"MATCHES FOR ABHIJEET ({'All Active' if args.all else '< 24 Hours Old'}): {len(matched)}")
+    print(f"MATCHES FOR ABHIJEET ({'All Active' if args.all else '< 6 Hours Old'}): {len(matched)}")
     print(f"=======================================================\n")
 
     for idx, job in enumerate(matched, 1):
