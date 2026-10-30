@@ -37,6 +37,44 @@ if sys.platform == "win32":
     except Exception:
         pass
 
+LOG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "watcher.log")
+
+class TeeLogger:
+    def __init__(self, filepath, stream):
+        self.stream = stream
+        try:
+            self.f = open(filepath, "a", encoding="utf-8")
+        except Exception:
+            self.f = None
+
+    def write(self, data):
+        if self.stream:
+            try:
+                self.stream.write(data)
+            except Exception:
+                pass
+        if self.f:
+            try:
+                self.f.write(data)
+                self.f.flush()
+            except Exception:
+                pass
+
+    def flush(self):
+        if self.stream:
+            try:
+                self.stream.flush()
+            except Exception:
+                pass
+        if self.f:
+            try:
+                self.f.flush()
+            except Exception:
+                pass
+
+sys.stdout = TeeLogger(LOG_PATH, sys.stdout)
+sys.stderr = TeeLogger(LOG_PATH, sys.stderr)
+
 import requests
 
 # ---- CONFIG: Curated for Abhijeet Singh (4th Year Fresher - Java / Full-Stack / Backend / Frontend) ----
@@ -373,6 +411,9 @@ EXCLUDE = [
     "fellow",
     "distinguished",
     "expert",
+    "smts",
+    "lmts",
+    "pmts",
     "sde ii",
     "sde-ii",
     "sde 2",
@@ -386,6 +427,17 @@ EXCLUDE = [
     "swe 2",
     "swe-2",
     "swe iii",
+    "smts",
+    "lmts",
+    "pmts",
+    "mts ii",
+    "mts-ii",
+    "mts 2",
+    "mts-2",
+    "mts iii",
+    "mts-iii",
+    "mts 3",
+    "mts-3",
     "software engineer ii",
     "software engineer 2",
     "software engineer iii",
@@ -885,6 +937,14 @@ def main():
     )
     args = parser.parse_args()
 
+    pid_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".watcher.pid")
+    if not args.once and not args.dry_run:
+        try:
+            with open(pid_file, "w", encoding="ascii") as f:
+                f.write(str(os.getpid()))
+        except Exception:
+            pass
+
     db = None
     if not args.dry_run:
         db = sqlite3.connect(DB_PATH)
@@ -913,6 +973,12 @@ def main():
     except KeyboardInterrupt:
         print("\nJob Watcher stopped by user.")
     finally:
+        if not args.once and not args.dry_run:
+            if os.path.exists(pid_file):
+                try:
+                    os.remove(pid_file)
+                except Exception:
+                    pass
         if db:
             db.close()
 

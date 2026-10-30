@@ -3,6 +3,9 @@
 
 # Runtime files
 .watcher.pid
+*.log
+watcher.log
+watcher_error.log
 
 # Python cache
 __pycache__/
