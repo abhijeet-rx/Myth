@@ -255,9 +255,76 @@ def parse_timing(dt_val):
     except Exception:
         return None, "Active Opening"
 
+
+WORKDAY_COMPANIES = {
+    "salesforce": ("salesforce.wd12.myworkdayjobs.com", "salesforce", "External_Career_Site", "Salesforce"),
+    "nvidia": ("nvidia.wd5.myworkdayjobs.com", "nvidia", "NVIDIAExternalCareerSite", "NVIDIA"),
+    "adobe": ("adobe.wd5.myworkdayjobs.com", "adobe", "external_experienced", "Adobe"),
+    "workday": ("workday.wd5.myworkdayjobs.com", "workday", "Workday", "Workday"),
+    "target": ("target.wd5.myworkdayjobs.com", "target", "targetcareers", "Target"),
+    "mastercard": ("mastercard.wd1.myworkdayjobs.com", "mastercard", "CorporateCareers", "Mastercard"),
+    "paypal": ("paypal.wd1.myworkdayjobs.com", "paypal", "jobs", "PayPal"),
+    "autodesk": ("autodesk.wd1.myworkdayjobs.com", "autodesk", "Ext", "Autodesk"),
+}
+
 def fetch_company_jobs(slug):
     slug_clean = slug.strip().lower().replace(" ", "")
     results = []
+
+    # 0. Check Amazon
+    if slug_clean == "amazon":
+        url = "https://www.amazon.jobs/en/search.json?base_query=software+engineer&country=IND&result_limit=25"
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=8)
+            if r.status_code == 200:
+                for j in r.json().get("jobs", []):
+                    hrs, t_str = parse_timing(j.get("posted_date"))
+                    job_path = j.get("job_path", "")
+                    results.append({
+                        "source": "Amazon Jobs",
+                        "company": "Amazon",
+                        "title": (j.get("title") or "").strip(),
+                        "location": (j.get("location") or "India").strip(),
+                        "url": f"https://www.amazon.jobs{job_path}" if job_path else "https://www.amazon.jobs",
+                        "age_hours": hrs,
+                        "timing_str": t_str,
+                    })
+                if results:
+                    return "Amazon Jobs", results
+        except Exception:
+            pass
+
+    # 0. Check Workday
+    if slug_clean in WORKDAY_COMPANIES:
+        host, tenant, site_id, display_name = WORKDAY_COMPANIES[slug_clean]
+        url = f"https://{host}/wday/cxs/{tenant}/{site_id}/jobs"
+        try:
+            r = requests.post(url, json={"appliedFacets": {}, "limit": 20, "offset": 0, "searchText": ""}, headers=HEADERS, timeout=8)
+            if r.status_code == 200:
+                now_utc = datetime.datetime.now(datetime.timezone.utc)
+                for j in r.json().get("jobPostings", []):
+                    ext_path = j.get("externalPath", "")
+                    posted_str = j.get("postedOn", "")
+                    hrs = None
+                    if "today" in posted_str.lower():
+                        hrs = 2.0
+                    elif "yesterday" in posted_str.lower():
+                        hrs = 18.0
+                    elif "day" in posted_str.lower() or "30+" in posted_str:
+                        hrs = 72.0
+                    results.append({
+                        "source": "Workday",
+                        "company": display_name,
+                        "title": (j.get("title") or "").strip(),
+                        "location": (j.get("locationsText") or "Unspecified").strip(),
+                        "url": f"https://{host}/en-US/{site_id}{ext_path}" if ext_path else "",
+                        "age_hours": hrs,
+                        "timing_str": posted_str or "Active Opening",
+                    })
+                if results:
+                    return "Workday", results
+        except Exception:
+            pass
 
     # 1. Try Greenhouse
     gh_url = f"https://boards-api.greenhouse.io/v1/boards/{slug_clean}/jobs"

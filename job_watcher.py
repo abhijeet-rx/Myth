@@ -281,6 +281,19 @@ COMPANIES = {
         "wiingy",
         "wise",
     ],
+    "workday": [
+        "adobe",
+        "autodesk",
+        "mastercard",
+        "nvidia",
+        "paypal",
+        "salesforce",
+        "target",
+        "workday",
+    ],
+    "amazon": [
+        "amazon",
+    ],
 }
 
 KEYWORDS = [
@@ -630,11 +643,88 @@ def fetch_smartrecruiters(slug):
         }
 
 
+
+WORKDAY_COMPANIES = {
+    "salesforce": ("salesforce.wd12.myworkdayjobs.com", "salesforce", "External_Career_Site", "Salesforce"),
+    "nvidia": ("nvidia.wd5.myworkdayjobs.com", "nvidia", "NVIDIAExternalCareerSite", "NVIDIA"),
+    "adobe": ("adobe.wd5.myworkdayjobs.com", "adobe", "external_experienced", "Adobe"),
+    "workday": ("workday.wd5.myworkdayjobs.com", "workday", "Workday", "Workday"),
+    "target": ("target.wd5.myworkdayjobs.com", "target", "targetcareers", "Target"),
+    "mastercard": ("mastercard.wd1.myworkdayjobs.com", "mastercard", "CorporateCareers", "Mastercard"),
+    "paypal": ("paypal.wd1.myworkdayjobs.com", "paypal", "jobs", "PayPal"),
+    "autodesk": ("autodesk.wd1.myworkdayjobs.com", "autodesk", "Ext", "Autodesk"),
+}
+
+
+def fetch_workday(slug):
+    info = WORKDAY_COMPANIES.get(slug)
+    if not info:
+        return
+    host, tenant, site_id, display_name = info
+    url = f"https://{host}/wday/cxs/{tenant}/{site_id}/jobs"
+    payload = {"appliedFacets": {}, "limit": 20, "offset": 0, "searchText": ""}
+    r = requests.post(url, json=payload, headers=HEADERS, timeout=10)
+    r.raise_for_status()
+    now_utc = datetime.datetime.now(datetime.timezone.utc)
+    for j in r.json().get("jobPostings", []):
+        ext_path = j.get("externalPath", "")
+        job_url = f"https://{host}/en-US/{site_id}{ext_path}" if ext_path else ""
+        posted_str = j.get("postedOn", "")
+        dt = None
+        if "today" in posted_str.lower():
+            dt = now_utc - datetime.timedelta(hours=2)
+        elif "yesterday" in posted_str.lower():
+            dt = now_utc - datetime.timedelta(hours=18)
+        elif "day" in posted_str.lower() or "30+" in posted_str:
+            dt = now_utc - datetime.timedelta(days=3)
+
+        clean_id = ext_path.split("_")[-1] if "_" in ext_path else ext_path
+        job_id = f"wd:{slug}:{clean_id}"
+        yield {
+            "id": job_id,
+            "title": (j.get("title") or "").strip(),
+            "location": (j.get("locationsText") or "Unspecified").strip(),
+            "url": job_url,
+            "company": display_name,
+            "source": "Workday",
+            "posted_at": dt,
+            "timing_str": posted_str or "Active Opening",
+        }
+
+
+def fetch_amazon(slug="amazon"):
+    url = "https://www.amazon.jobs/en/search.json?base_query=software+engineer&country=IND&result_limit=25"
+    r = requests.get(url, headers=HEADERS, timeout=10)
+    r.raise_for_status()
+    for j in r.json().get("jobs", []):
+        posted_date_str = j.get("posted_date", "")
+        dt = None
+        if posted_date_str:
+            try:
+                dt = datetime.datetime.strptime(posted_date_str, "%B %d, %Y").replace(tzinfo=datetime.timezone.utc)
+            except Exception:
+                pass
+        job_id = f"az:amazon:{j.get('id_icims') or j.get('id')}"
+        job_path = j.get("job_path", "")
+        job_url = f"https://www.amazon.jobs{job_path}" if job_path else "https://www.amazon.jobs"
+        yield {
+            "id": job_id,
+            "title": (j.get("title") or "").strip(),
+            "location": (j.get("location") or j.get("normalized_location") or "India").strip(),
+            "url": job_url,
+            "company": "Amazon",
+            "source": "Amazon Jobs",
+            "posted_at": dt,
+            "timing_str": format_timing(dt) if dt else (posted_date_str or "Active Opening"),
+        }
+
 FETCHERS = {
     "greenhouse": fetch_greenhouse,
     "lever": fetch_lever,
     "ashby": fetch_ashby,
     "smartrecruiters": fetch_smartrecruiters,
+    "workday": fetch_workday,
+    "amazon": fetch_amazon,
 }
 
 def fetch_company_safe(item):
