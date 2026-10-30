@@ -1,23 +1,31 @@
 # Master target company list for Myth ATS scanner
 1mg
+37signals
 3i InfoTech
 3i Infotech Ltd
 A23 (Ace2Three)
 AWeber
 Accenture
 Accenture plc
+Acko
 Acko Insurance
+Acko Tech
 ActiveCampaign
+Adjust
 Adobe
 Aegis Soft Tech
+Affirm
 Affirma
 Agara
 Agara Labs
 Agoda
 AgraTech
 AirBnB
+Airbnb
 Airfarewatchdog
+Airmeet
 Airtable
+Akamai
 Algolia
 Algoscale Technologies
 Algoworks
@@ -37,6 +45,7 @@ Ansible (Red Hat)
 Apna
 AppInventiv
 AppInventiv Technologies
+AppLovin
 Appian
 AppitSimple Infotek (CallHippo)
 Applause
@@ -53,20 +62,26 @@ Arya.ai
 Asana
 Aspire Systems
 Atea ASA (Norway)
+Ather Energy
+Ather Grid
 Atlassian
 Atos
 Atos SE
 Atos Syntel
 Aufait Technologies
 Aujas Cybersecurity
+Aurora Innovation
 Auth0
+Automattic
 Avaamo
 Avalara (Consulting & Tax Services)
 Avisoft
 Axis Bank
+Aye Finance
 Azilen Technologies
 BNP Paribas
 BYJU'S
+Babylon Health
 Bacancy Technology
 Balsamiq
 Bank of America
@@ -78,6 +93,7 @@ BeatO
 Bechtle AG (Germany)
 Benchmark Email
 Bentley Systems
+Bewakoof
 BharatPe
 BigBasket
 BigBasket (tech)
@@ -86,10 +102,18 @@ Bira 91
 Birlasoft
 Birlasoft Ltd
 Bitbucket
+Bizongo
+BlackBuck
 Blazeclan Technologies
+Blinkit
+Blue Tokai
 BluePi Consulting
+BlueStacks
 Blyk
 Blynk
+Boat
+Boat Tech
+Bolt
 BookMyFlight
 BookMyShow
 Booking Holdings
@@ -99,28 +123,44 @@ Boston Consulting Group (BCG) - Technology Services
 Bounce
 Bouvet ASA
 Brainvire Infotech
+Branch
+Brex
 Brillio Technologies
 Brookfield Global Relocations
 BrowserStack
+BrowserStack India
+Browserless
 Buddy4Study
 Bugclipper
+Bulb
 Byju’s
+Bytedance
 CGI
 CGI Inc.
+CRED
 CSS Corp
+Calendly
 Cambrio
 Campaign Monitor
+Canonical
 Canva
 Capgemini
 Capgemini SE
 Capillary Tech
 Capita PLC (UK)
 Capterra
+Cars24
+Cashfree
 Cashify
 Cashkaro
 Castellum Inc
+Cazoo
+Chainalysis
+ChargePoint
 Chargebee
 CheapOair
+Checkout UK
+Checkout.com
 Chef Software
 Chumbak
 Cigniti
@@ -134,14 +174,20 @@ Classplus
 Clear (formerly ClearTax)
 ClearTax
 Cleartrip
+Clerk
 CleverTap
+Clevertap
+ClickHouse
 ClickUp
 CloudCherry
+CloudKitchen
 CloudThat Technologies
 Cloudera
 Cloudflare
 Clover Infotech
+Cockroach Labs
 Coda
+CodeSandbox
 Codewave Technologies
 Coding Ninjas
 Coditas
@@ -154,19 +200,25 @@ Cohesity
 CoinDCX
 CoinSwitch
 CoinSwitch Kuber
+Coinbase
 CometChat
+Compass
 Computools
 Concentrix
 Concetto Labs
 Confluent
 Constant Contact
+Contentful
 ConvertKit
 CoreLogic
 Couchbase
+Country Delight
+Coursera
 Crazy Egg
 Creatio
 Cred
 CredAvenue
+CreditBee
 Crest Data Systems
 Crest Infosystems
 Crisp
@@ -174,7 +226,9 @@ Cropin
 CrowdStrike
 Crowe
 Crowe (Tech Services)
+Cruise
 Crunchbase
+Curve
 Cybage
 Cybage Software
 Cybage Software Pvt Ltd
@@ -185,36 +239,51 @@ Cyient Ltd
 DRC Systems
 DXC Technology
 Daffodil Software
+Dailyhunt
 Daraz
+Darktrace
 Darwinbox
 DataArt
 DataArt Inc.
 Databricks
 Datadog
 Datamatics Global Services
+DealShare
+Deel
 Delhivery
 Delhivery (tech side)
 Deliveroo
+Deliveroo Tech
 Dell Technologies (Services)
 Deloitte (consulting & tech)
 Deloitte Consulting LLP (Services)
 Deutsche Bank
+Dev.to
 Devout Tech Consultants
 Diceus
 Digit Insurance
 Digital Bharat Agency
+Digital Turbine
 DigitalOcean
+Digitap
+Discord
 DocuSign
 Domo
+DoorDash
 Dotsquares
 Doubtnut
+Dream Sports
 Dream11
+Dream11 Tech
 Drift
 Drip
 Dropbox
 Druva
+DuckDuckGo
+Dukaan
 Dunzo
 Duo Security (Cisco)
+Duolingo
 ELEKS
 ELEKS - Global Services & Solutions
 EPAM Systems
@@ -222,18 +291,25 @@ EPAM Systems Inc.
 EXL Service
 EY (Ernst & Young)
 EY (Ernst & Young) Global Services
+EarlySalary
+EaseMyTrip
 Easyrewardz
+EatSure
 EdgeVerve
 Eka Software
 Ekincare
 Elastic
+Elastic Cloud
+Elastic Path
 Elastic Security
+ElasticRun
 Encora Digital
 Encora Technologies
 Endava
 Endava (UK)
 Entropik Tech
 Envestnet Yodlee
+Epic Games
 Euphoric Thought Technologies
 Evernote
 Evoke Technologies
@@ -244,11 +320,15 @@ Experion Technologies
 Expleo Group
 Facebook (Meta)
 Facilio
+Faircent
+Faire
+Fampay
 FanFight
 Fantain
 FarEye
 FastSpring
 Fastly
+Fi Money
 Figma
 Finbox
 FindMyCar
@@ -256,23 +336,33 @@ Fingent
 Fingent (India)
 Finoit
 Finoit Technologies
+Fire-Boltt
 Firebase (Google)
+FirstCry
 Firstsource Solutions
 Fission Labs
 Fittr
+Fiverr
 Fivetran
+Flexport
 Flipkart
+Flipspaces
 Fly.io
 FlyNow
 Flyrobe
 Fortinet
 Fractal Analytics
 Framer
+Freecharge
+FreshBooks
+FreshMenu
+FreshToHome
 Freshdesk (Freshworks)
 Freshworks
 Fujitsu
 Fujitsu Ltd.
 FunPlus
+Furlenco
 Fyllo
 Fynd
 G2
@@ -281,25 +371,39 @@ GameFlare
 Gameberry Labs
 Gamepind
 Games24x7
+Gameskraft
 Gamezop
 GanttPRO
 Gartner Inc. (Advisory & Technology Services)
 Gateway Group
+GeeksforGeeks
 Genpact
 GetMyUni
 GetResponse
+Ghost
 Girikon
 GitHub
+GitKraken
 GitLab
 Giva
+Glitch
 GlobalLogic
 Globant
 Globant SA
+GoCardless
+GoDaddy
+GoDigit
+Goibibo
+Gojek
 Goldman Sachs
+Gong
 GoodWorkLabs
 Google
+Grab
+Grafana Labs
 Grant Thornton
 Grant Thornton (Tech & Consulting)
+Graphcore
 Grazitti Interactive
 GreytHR
 Grid Dynamics Holdings Inc
@@ -307,17 +411,24 @@ Grofers
 Growfin
 GrowthX
 Groww
+Groww Tech
+GrowwPay
 Gumroad
+Gupshup
+Gusto
 HCL Technologies
 HDFC Bank
 HSBC
 HackerEarth
 HackerRank
+HackerRank India
 Happiest Minds Technologies
 Happiest Technologies
 Harman Connected India
 Harman Connected Services
 HashiCorp
+Hashnode
+Hasura
 HealthKart
 HealthifyMe
 Heap Analytics
@@ -329,22 +440,28 @@ Hevo Data
 Hewlett Packard Enterprise (Services)
 Hexaware Technologies
 Hidden Brains Infotech
+HighRadius
 Hike Messenger
 Hinduja Global Solutions
 Hinduja Global Solutions (HGS)
 Hitachi Ltd.
 Hithink RoyalFlush
+Homelane
+Hopin
 Hopper
 Hortonworks
 HotelTonight
 Hotjar
+Hotstar
 Housejoy
+Housing.com
 HubSpot
 Hyland Software
 Hyperlink InfoSystem
 IBM
 ICICI Bank
 IDFC FIRST Bank
+IDfy
 ITC Infotech
 Ibexlabs
 Icertis
@@ -352,10 +469,14 @@ Icertis (services & consulting)
 Ilink Systems
 InData Labs
 InMobi
+InVideo
 InVision
 Incedo Inc
+Increff
+IndMoney
 IndiaNIC Infotech
 Indiamart
+Indifi
 Indium Software
 Indus Net Technologies
 IndusInd Bank
@@ -368,15 +489,21 @@ Informatica
 Infostretch Corporation
 Infosys
 Infosys Limited
+Infra.Market
+Infra360
 Innominds
 Innostax Software Labs
 Innov8
 Innovaccer
 Innowise Group
 Innowrap Technologies
+Inshorts
+Instabase
+Instacart
 Instamojo
 Instapage
 Instoried
+InsuranceDekho
 Intact Digital
 Intact Digital (IT services)
 Intellect Design Arena
@@ -387,14 +514,20 @@ Intercom
 InterviewBit
 Intuit
 Intuz
+IronSource
 Itransition
 Itransition Group
+Ixigo
 JPMorgan Chase
+Jar
 Jenkins (CloudBees)
 JetSynthesys
 Jio
 Jira Software
 Jivox
+Josh Talks
+Jupiter
+Juspay
 KCS Technologies
 KPIT Technologies
 KPMG
@@ -402,15 +535,22 @@ KPMG Advisory Services
 Kaseya
 Kayak
 Kayako
+Keka
 Kellton Tech
 Kellton Tech Solutions
+Khan Academy
 Khatabook
+Khatabook Tech
 Kingsoft Office
 Kissflow
+Klarna
 Klaviyo
 KnackForge
 Koo
 Kotak Mahindra Bank
+KredX
+KreditBee
+Krutrim
 Kyndryl (USA)
 L&T Technology Services
 L&T Technology Services (LTTS)
@@ -420,16 +560,24 @@ Lastminute.com
 Leadpages
 Leadsquared
 LeapFinance
+Leena.ai
 Leidos (USA)
 Lemon Squeezy
+LenDenClub
+Lendingkart
+Lenskart
+Leverage Edu
 Licious
+Linear
 LinkedIn
 LiquidPlanner
 Livspace
+Loadshare
 Loco
 Locus
 Locus.sh
 LogMeIn
+LogiNext
 Logicalis (UK)
 Looker (Google)
 Lookout
@@ -438,12 +586,16 @@ Lucidity
 Luxoft
 Luxoft (a DXC company)
 Luxoft (part of DXC)
+Lyft
 MTOAG Technologies
 Mad Street Den
+Magicpin
 Mailchimp
 MailerLite
 Majesco
+MakeMyTrip
 MamaEarth
+Mamaearth
 Manhattan Associates
 Manthan
 Marvel App
@@ -456,7 +608,9 @@ McKinsey & Company (Technology Services)
 MediBuddy
 MediaAgility Consulting
 Medinfi
+Medium
 Meesho
+Meesho Tech
 Mendix
 MentorMate
 MeowBox
@@ -467,6 +621,7 @@ Microsoft Project
 MilkBasket
 MindBowser Infosolutions
 MindInventory
+MindTickle
 Mindgate Solutions
 Mindtree
 Mindtree (LTIMindtree)
@@ -474,13 +629,16 @@ Miro
 Mixpanel
 MoEngage
 MobiKwik
+Mobile Premier League
 Mobile Premier League (MPL)
 Mobinius Technologies
 Mobisoft Infotech
 Modis (Global)
+Moglix
 Monday.com
 MoneyTap
 MongoDB
+Monzo
 Moosend
 Morgan Stanley
 Motherson Technology
@@ -488,6 +646,8 @@ Mphasis
 MuleSoft
 Multidots
 MyGate
+Myntra
+Myntra Jabong
 N-iX
 NDimensionZ
 NIIT Technologies (now NIIT)
@@ -498,7 +658,10 @@ NTT DATA Services
 Nagarro
 Nagarro India
 Narola Infotech
+Navi
+Navi Technologies
 Nazara Technologies
+Neon
 Ness Digital Engineering
 NetApp
 NetWeb Software
@@ -511,25 +674,47 @@ Netlify
 Netronome
 New Relic
 Newgen Software Technologies
+Newton School
 Niki.ai
+Ninjacart
 Nintex
 NirogStreet
 Nitor Infotech
+NoBroker
+NoBrokerHood
+Noise
 Notion
 Nous Infosystems
 NowFloats
+Nubank
+Nuro
 Nykaa
+Nykaa Tech
+Nymble
 OKCredit
+OYO
 OYO Rooms
 Object Edge
 Observe.AI
+Observe.ai
+Ocado Technology
 Odoo
+OfBusiness
+OkCredit
 Okta
 Ola
+Ola Electric
+Ola Foods
+Ola Krutrim
 Omnisend
 OnGraph Technologies
 OneDirect
+Open
+Open Financial Technologies
+OpenEnvoy
+OpenSea
 OpenXcell
+Opendoor
 Optimizely
 Optimizely Consulting Services
 Optiv
@@ -540,24 +725,36 @@ Oracle Corporation (Services)
 Oracle Financial Services Software Ltd.
 Orbitz
 OutSystems
+Outreach
 Oxagile
 Ozonetel
 PKF International
 PKF International (IT Consulting)
 Paddle
 PagerDuty
+Palantir
 Palo Alto Networks
 Pantheon
 PayPal
+PayU
 Paytm
 Paytm (Product side)
 Paytm First Games
+Paytm Insider
 Paytm Payments
 Paytm Payments Bank
 Peerbits
 Pegasystems
+Pepper Cloud
+Pepper Content
+Pepper Square
+Pepperfry
+Pepperfry Tech
 Perception System
+Perfios
+Perfios Tech
 Persistent Systems
+PharmEasy
 Pharmeasy
 PhonePe
 Phool
@@ -569,13 +766,21 @@ Ping Identity
 Pinterest
 PitchBook
 PixelCrayons
+Pixis
+Plaid
+Plaid India
+PlanetScale
 Plenitude
 PokerBaazi
 Polaris Consulting & Services Ltd.
 PolicyBazaar
+PolicyBazaar Tech
 Porter
+Porter Tech
 Poshn
+PostHog
 Postman
+Postman India
 Practo
 PrepInsta
 Priceline
@@ -583,9 +788,11 @@ ProfitWell
 ProjectManager.com
 Prompt Softech
 Proofhub
+PropTiger
 Protiviti (Consulting/Tech Services)
 Proto.io
 Publicis Sapient
+Pulumi
 Puppet Labs
 PwC (consulting & tech)
 Pythian
@@ -599,35 +806,53 @@ Qburst Technologies
 Qlik
 Quikr
 Quizizz
+Quora
 Qure.ai
 Quytech
 R Systems International Ltd
 R Systems International Ltd.
 Radixweb
+Railwaymen
 Railyatri
+Ramp
 Ranorex
 Rapid7
 RapidOps
 RapidValue Solutions
+Rapido
 Rapidops Solutions
 Ray Business Technologies
 Razorpay
 RazorpayX
+Rebel Foods Tech
 Recurly
+Red Hat
+Reddit
 Redis Labs
 Redseer
 Relevel (by Unacademy)
+Remote
 Render
+RenewBuy
 Rentomojo
+Retool
+Revolut
+Riot Games
 RipenApps Technologies
+Rippling
 Rishabh Software
+Rivian Software
 Rivigo
+Robinhood
+Roblox
 Robosoft Technologies
 Roomkey
 Rooter
 Roposo
 Rubrik
 RummyCircle (by Games24x7)
+Rupeek
+Rupeezy
 SAIC (USA)
 SAP
 SAP SE (Services/Consulting)
@@ -638,11 +863,15 @@ Salt Technologies
 Saltt Tech
 Sapiens International Corporation
 Sapiens International Corporation Ltd.
+Sarvam AI
 Sasken Technologies
 Sauce Labs
 Saviant Consulting
 Saviant Tech
+Scale AI
+ScaleGrid
 Scaler
+Scaler Academy
 Scoro
 Scripbox
 Searce
@@ -654,18 +883,27 @@ SendGrid
 Sendinblue
 Sensiple Software Solutions
 SentinelOne
+Sentry
 ServiceNow
+Setu
+Shadowfax
+ShareChat
 ShipBob
 Shiprocket
 Shipsy
 ShopClues
+Shopee
 Shopify
 Shuttl
 Siemens AG (Digital Services)
 SigTuple
 Sigma Software (Ukraine)
+SignDesk
+Signzy
 Simform
 Simform India
+Simpl
+SingleStore
 Sisense
 Sketch
 Skill-Lync
@@ -673,11 +911,16 @@ Skyscanner
 Slack
 Slack Technologies
 Slalom Consulting
+Slice
 Smallcase
 Smartsheet
 Snapchat
+Snapdeal
+Snapmint
 Snowflake
+Snowplow
 Snyk
+SoFi
 SoftBank Engineering Services
 SoftServe
 SoftServe Inc.
@@ -700,17 +943,24 @@ SourceBae
 SourceFuse
 Space-O Technologies
 SpiceJet
+Spinny
 Splashtop
 Splunk
 Spotify
 Sprinklr
 Sprinto
+Spyne
 Square
 Square (Block Inc.)
+Square Yards
 Squarespace
 Srijan Technologies
+Starling Bank
 Stripe
+Stripe India
 Stylumia
+Substack
+SumUp
 Supabase
 Sutherland Global Service
 Sutherland Global Services
@@ -726,6 +976,7 @@ Tableau
 Tableau Software
 Talend
 Talview
+Tata 1mg
 Tata Consultancy Services (TCS)
 Tata Elxsi
 TatvaSoft
@@ -740,23 +991,31 @@ TechAhead
 Technostacks Infotech
 Technource
 Techwave Consulting
+Temporal
 Tenable
 Tencent Games
 Terraform (HashiCorp)
 Tesla
 Testbook
 The NineHertz
+Thought Machine
 ThoughtSpot
 ThoughtWorks
 ThoughtWorks Inc.
 Tibil Solutions
 TietoEVRY
+TikTok
 Tismo Technology Solutions
 ToTheNew
+Tokopedia
+Toppr
+Toptal
 Townscript
 TraceLink
+Tractable
 Tracxn
 Traveloka
+Travis CI
 TravisCI
 Traya Health
 Treebo
@@ -768,32 +1027,45 @@ Trivago
 TruckSuvidha
 Truebil
 Truecaller
+Trulioo
 Trvl Counter
 Turing
 Turtlemint
 Twilio
+Twilio Segment
 Twitter
+Typeform
 U-blox
 UST
 UST Global
 UXRTECH (Services)
 Uber
+Udaan
+Udemy
 Unacademy
 Unbounce
+Unicommerce
 Uniphore
+Unity
 UpGrad
 Upstox
+Upwork
+Urban Company
 Urban Ladder
 UrbanClap
 VLink Inc
 VMware
+VMware Tanzu
 VVDN Technologies
 VWO
 VWO (by Wingify)
 Vahan.ai
+Vahdam
 Valtech (France)
 ValueCoders
 ValueLabs
+Valve
+Vantage Circle
 Vayeca
 Vedantu
 Veeam Software
@@ -806,12 +1078,19 @@ Virtusa
 Vistex
 Vogo
 Voylla
+Vymo
+Vymo Tech
 WHMCS Global Services
 WNS Global Services
+Wakefit
 Wanderu
 Wavestone (France)
 Wavicle Data Solutions
 Wavicle Data Solutions (India)
+WayCool
+Wayfair
+Waymo
+WebEngage
 WebOccult Technologies
 Webflow
 WeblineIndia
@@ -825,6 +1104,8 @@ WinZO
 Wingify
 Wipro
 Wipro Limited
+Wise
+Wise Platform
 WiseTech Global
 Wishbook
 Wishfin
@@ -832,6 +1113,7 @@ Wix
 Workday
 Workzone
 Wrike
+Xero
 Xicom Technologies
 Xoriant
 Xoxoday
@@ -843,6 +1125,8 @@ Yellow.ai
 Yes Bank
 Yethi Consulting
 Yondu
+Yubi
+Zalando
 Zapier
 Zapr
 Zealous System
@@ -851,13 +1135,22 @@ Zensar
 Zensar Technologies
 Zepto
 Zerodha
+Zerodha Tech
+Zerodha Varsity
 ZestMoney
+Zeta
+Zeta Suite
+Zettle
+Zetwerk
 Zifo RnD Solutions
+Zilch
 Zinnov Management Consulting
 Zipgo
+Zivame
 Zoho
 Zoho Corporation
 Zoho Projects
+Zoko
 Zolve
 Zomato
 Zones
@@ -865,6 +1158,9 @@ Zones LLC
 Zoom
 Zoom Video
 ZoomInfo
+Zoox
+Zopa
+Zopper
 Zscaler
 Zupee
 Zycus
