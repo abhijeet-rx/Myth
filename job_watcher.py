@@ -22,6 +22,7 @@ Usage:
   py job_watcher.py --dry-run     # Inspect all current active matching jobs without DB writes
 """
 import argparse
+import concurrent.futures
 import datetime
 import os
 import re
@@ -636,8 +637,20 @@ FETCHERS = {
     "smartrecruiters": fetch_smartrecruiters,
 }
 
+def fetch_company_safe(item):
+    source, slug = item
+    fetcher = FETCHERS.get(source)
+    if not fetcher:
+        return source, slug, []
+    try:
+        jobs = list(fetcher(slug))
+        return source, slug, jobs
+    except Exception:
+        return source, slug, None
 
-def matches(job, enforce_max_age=True):
+
+
+def matches(job, enforce_max_age=True, max_age_hours=MAX_AGE_HOURS):
     title = job["title"].lower()
     loc = job["location"].lower()
 
@@ -656,13 +669,13 @@ def matches(job, enforce_max_age=True):
     if LOCATIONS and not any(l in loc for l in LOCATIONS):
         return False
     
-    # 4. Strictly throw out any job older than MAX_AGE_HOURS (6 hours) or with unknown timestamp
+    # 4. Strictly throw out any job older than max_age_hours (6 hours) or with unknown timestamp
     if enforce_max_age:
         if not job.get("posted_at"):
             return False
         now_utc = datetime.datetime.now(datetime.timezone.utc)
         age_hours = (now_utc - job["posted_at"]).total_seconds() / 3600.0
-        if age_hours > MAX_AGE_HOURS or age_hours < -2.0:
+        if age_hours > max_age_hours or age_hours < -2.0:
             return False
 
     return True
@@ -708,36 +721,30 @@ def notify(job, dry_run=False):
         print(f"[warn] Failed to send Telegram alert: {e}", file=sys.stderr)
 
 
-def poll_cycle(db, dry_run=False):
+def poll_cycle(db, dry_run=False, max_age=MAX_AGE_HOURS):
     total_found = 0
     all_matched = []
 
+    tasks = []
     for source, slugs in COMPANIES.items():
-        fetcher = FETCHERS.get(source)
-        if not fetcher:
-            continue
-
         for slug in slugs:
-            print(f"[{source}] Polling '{slug}'...", end=" ", flush=True)
-            try:
-                jobs = list(fetcher(slug))
-                total_found += len(jobs)
-                print(f"{len(jobs)} active jobs found.", flush=True)
-            except Exception as e:
-                print(f"FAILED: {e}", flush=True)
-                continue
+            tasks.append((source, slug))
 
-            seeded = False
-            if db:
-                row = db.execute(
-                    "SELECT 1 FROM seen WHERE company=? LIMIT 1", (slug,)
-                ).fetchone()
-                seeded = row is not None
+    print(f"[*] Polling {len(tasks)} company boards concurrently across 4 ATS platforms...")
+    start_t = time.time()
+    completed = 0
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+        for source, slug, jobs in executor.map(fetch_company_safe, tasks):
+            completed += 1
+            if jobs is None:
+                continue
+            total_found += len(jobs)
 
             new_in_company = 0
             for job in jobs:
                 if dry_run:
-                    if matches(job):
+                    if matches(job, enforce_max_age=True, max_age_hours=max_age):
                         all_matched.append(job)
                     continue
 
@@ -753,27 +760,25 @@ def poll_cycle(db, dry_run=False):
                     (job["id"], slug, time.time()),
                 )
 
-                if seeded and matches(job):
+                if matches(job, enforce_max_age=True, max_age_hours=max_age):
                     all_matched.append(job)
                     notify(job, dry_run=False)
+                    time.sleep(0.3)  # Gentle spacing for Telegram rate limits
 
             if not dry_run:
                 db.commit()
-                if not seeded:
-                    print(f"  └─ First run for '{slug}': seeded {len(jobs)} jobs silently.")
-                elif new_in_company > 0:
-                    print(f"  └─ Found {new_in_company} new listings.")
 
-            time.sleep(1)
+    duration = time.time() - start_t
+    print(f"[+] Completed scan of {len(tasks)} boards in {duration:.1f}s.")
+    print(f"    Total active jobs: {total_found} | Fresh matches (<= {max_age}h): {len(all_matched)}")
 
     if dry_run:
         all_matched.sort(
             key=lambda x: x["posted_at"].timestamp() if x.get("posted_at") else 0,
             reverse=True,
         )
-        print(f"\n==================================================")
-        print(f"TOTAL MATCHES FOUND: {len(all_matched)} (Sorted by newest first)")
-        print(f"==================================================")
+        print("\n==================================================")
+        print("\n==================================================")
         for job in all_matched:
             notify(job, dry_run=True)
 
