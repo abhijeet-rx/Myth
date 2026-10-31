@@ -29,7 +29,7 @@ if ($runningProcesses) {
 
     Write-Host "Candidate:     Abhijeet Singh (B.Tech CSE Core, 2023-2027)" -ForegroundColor White
     Write-Host "Target Roles:  SDE, SWE, Java Developer, Backend (Spring Boot), Full-Stack, MTS, Intern" -ForegroundColor White
-    Write-Host "Cadence:       Every 15 minutes" -ForegroundColor White
+    Write-Host "Cadence:       Every 1 hour" -ForegroundColor White
 } else {
     Write-Host "Status:        STOPPED" -ForegroundColor Red
     Write-Host "To start:      .\start_background.ps1" -ForegroundColor Yellow

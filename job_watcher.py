@@ -29,7 +29,7 @@ Setup:
      $env:TELEGRAM_CHAT_ID="your_chat_id"
 
 Usage:
-  py job_watcher.py                      # Runs daemon loop every POLL_SECONDS (15m)
+  py job_watcher.py                      # Runs daemon loop every POLL_SECONDS (1 hour)
   py job_watcher.py --once               # Runs a single pass and exits
   py job_watcher.py --dry-run            # Inspect all current active matching jobs without DB writes
   py job_watcher.py --find-internships   # Discover all currently active tech internships
@@ -315,9 +315,8 @@ FOREIGN_COUNTRY_REGEX = re.compile(
     re.IGNORECASE,
 )
 
-MAX_AGE_HOURS = 24.0         # Full-time roles: <= 24 hours old
-MAX_INTERN_AGE_HOURS = 72.0  # Tech Internships: <= 72 hours old (covers 3-day / weekend postings)
-POLL_SECONDS = 900           # Scan every 15 minutes
+MAX_AGE_HOURS = 24.0         # STRICT RULE: Discard ANY job or internship older than 24 hours
+POLL_SECONDS = 3600          # Scan every 1 hour (60 minutes)
 DB_PATH = "seen_jobs.db"
 
 # ==============================================================================
@@ -831,11 +830,8 @@ def matches(job, enforce_max_age=True, max_age_hours=MAX_AGE_HOURS):
         now_utc = datetime.datetime.now(datetime.timezone.utc)
         age_hours = (now_utc - job["posted_at"]).total_seconds() / 3600.0
 
-        # Allow generous 72h window for tech internships, 24h for full-time software roles
-        is_intern = bool(INTERN_INDICATORS_REGEX.search(title))
-        allowed_age = MAX_INTERN_AGE_HOURS if is_intern else max_age_hours
-
-        if age_hours > allowed_age or age_hours < -2.0:
+        # Strictly discard any job or internship older than max_age_hours (24.0 hours)
+        if age_hours > max_age_hours or age_hours < -2.0:
             return False
 
     return True
@@ -846,7 +842,7 @@ def matches(job, enforce_max_age=True, max_age_hours=MAX_AGE_HOURS):
 # ==============================================================================
 def notify(job, dry_run=False):
     is_intern = bool(INTERN_INDICATORS_REGEX.search(job.get("title", "")))
-    category_title = "Tech Internship Match" if is_intern else "Software Job Match"
+    category_title = "Tech Internship Match (< 24h Old)" if is_intern else "Software Job Match (< 24h Old)"
 
     text = (
         f"🎯 [New {category_title}]\n"
@@ -992,7 +988,7 @@ def main():
         "--max-age",
         type=float,
         default=MAX_AGE_HOURS,
-        help="Max job age in hours for full-time roles (default: 24.0)",
+        help="Max job age in hours for all jobs and internships (default: 24.0)",
     )
     parser.add_argument(
         "--find-internships",
@@ -1024,7 +1020,7 @@ def main():
     print("=== Myth ATS Job Watcher Started ===")
     print("Candidate:       Abhijeet Singh (B.Tech CSE Core, 2023-2027)")
     print("Target Roles:    Software Engineer, SDE, Java Developer, Backend (Spring Boot), Full-Stack, MTS")
-    print("Internships:     Tech/Software Engineering Intern, SDE Intern, Backend/Frontend Intern (<= 72h)")
+    print("Internships:     Tech/Software Engineering Intern, SDE Intern, Backend/Frontend Intern (<= 24h)")
     print("Disqualifies:    Quality Engineer / QA / SDET, Firmware / Embedded, Hardware, Mechanical, Sales/HR")
     mode_str = (
         "Find Active Internships" if args.find_internships
@@ -1033,7 +1029,7 @@ def main():
         else f"Daemon Loop ({POLL_SECONDS}s)"
     )
     print(f"Mode:            {mode_str}")
-    print(f"Max Job Age:     <= {args.max_age}h (Full-Time) | <= {MAX_INTERN_AGE_HOURS}h (Internships)")
+    print(f"Max Job Age:     Strictly <= {args.max_age} hours (Jobs and Internships)")
     if TG_TOKEN and TG_CHAT:
         print(f"Telegram Bot:    Active (Chat ID: {TG_CHAT})")
     else:

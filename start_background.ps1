@@ -38,11 +38,11 @@ if (Test-Path $PID_FILE) {
 Write-Host "=================================================" -ForegroundColor Cyan
 Write-Host "[+] Myth Job Watcher started successfully!" -ForegroundColor Green
 Write-Host "    PID:           $runningPid" -ForegroundColor White
-Write-Host "    Cadence:       Every 15 minutes (900 seconds)" -ForegroundColor White
+Write-Host "    Cadence:       Every 1 hour (3600 seconds)" -ForegroundColor White
 Write-Host "    Candidate:     Abhijeet Singh (B.Tech CSE Core, 2023-2027)" -ForegroundColor White
 Write-Host "    Target Roles:  SDE, SWE, Java Developer, Backend (Spring Boot), Full-Stack, MTS, Intern" -ForegroundColor White
 Write-Host "    Deduplication: Multi-layer (ID + URL + Semantic Fingerprint + OS Lock)" -ForegroundColor White
-Write-Host "    Freshness:     Strictly <= 24 hours old" -ForegroundColor White
+Write-Host "    Freshness:     Strictly <= 24 hours old (Jobs & Internships)" -ForegroundColor White
 Write-Host "    Telegram:      Active (Instant alerts on new jobs)" -ForegroundColor White
 Write-Host "    Log file:      $LOG_FILE" -ForegroundColor Gray
 Write-Host "=================================================" -ForegroundColor Cyan
