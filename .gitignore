@@ -3,6 +3,9 @@
 
 # Runtime files
 .watcher.pid
+.watcher.lock
+seen_jobs.db-wal
+seen_jobs.db-shm
 *.log
 watcher.log
 watcher_error.log

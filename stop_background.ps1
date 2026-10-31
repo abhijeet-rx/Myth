@@ -1,22 +1,24 @@
-# stop_background.ps1 - Stop the background Job Watcher process
+# stop_background.ps1 - Stop any running Job Watcher daemon processes
 $PID_FILE = "$PSScriptRoot\.watcher.pid"
+$LOCK_FILE = "$PSScriptRoot\.watcher.lock"
 
 Set-Location $PSScriptRoot
 
-if (-not (Test-Path $PID_FILE)) {
-    Write-Host "[-] No running Job Watcher PID found." -ForegroundColor Yellow
-    exit 0
-}
+$runningProcesses = Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like "*job_watcher.py*" }
 
-$procId = (Get-Content $PID_FILE).Trim()
-if ($procId -match '^\d+$') {
-    $proc = Get-Process -Id $procId -ErrorAction SilentlyContinue
-    if ($proc) {
-        Stop-Process -Id $procId -Force
-        Write-Host "[+] Job Watcher process (PID: $procId) has been stopped." -ForegroundColor Green
-    } else {
-        Write-Host "[-] Process $procId was not running." -ForegroundColor Yellow
+if ($runningProcesses) {
+    foreach ($p in $runningProcesses) {
+        try {
+            Stop-Process -Id $p.ProcessId -Force -ErrorAction SilentlyContinue
+            Write-Host "[+] Stopped Job Watcher process (PID: $($p.ProcessId))" -ForegroundColor Green
+        } catch {
+            Write-Host "[-] Failed to stop PID $($p.ProcessId): $_" -ForegroundColor Yellow
+        }
     }
+} else {
+    Write-Host "[-] No running Job Watcher process found." -ForegroundColor Yellow
 }
 
+# Clean tracking files
 Remove-Item -Path $PID_FILE -Force -ErrorAction SilentlyContinue
+Remove-Item -Path $LOCK_FILE -Force -ErrorAction SilentlyContinue

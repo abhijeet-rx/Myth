@@ -40,143 +40,141 @@ HEADERS = {
     "Accept": "application/json",
 }
 
-KEYWORDS = [
-    # General engineering titles freshers/colleges get hired for
-    "software engineer",
-    "software developer",
-    "sde",
-    "swe",
-    "programmer",
-    "developer",
-    "engineer",
-    "member of technical staff",
-    "mts",
-    # Specific tech stack: Java / Full Stack / Frontend / Backend / Web
-    "java",
-    "full stack",
-    "full-stack",
-    "fullstack",
-    "backend",
-    "back end",
-    "back-end",
-    "frontend",
-    "front end",
-    "front-end",
-    "web developer",
-    "react",
-    "node",
-    "spring",
-    "springboot",
-    # Entry-level / Fresher / College campus specifics
-    "intern",
-    "internship",
-    "new grad",
-    "graduate",
-    "entry level",
-    "entry-level",
-    "early career",
-    "campus",
-    "fresher",
-    "trainee",
-    "apprentice",
-    "associate engineer",
-    "associate software",
-    "associate developer",
-    "junior",
-    "jr.",
-    "jr ",
-    "sde 1",
-    "sde i",
-    "sde-1",
-    "sde-i",
-    "swe 1",
-    "swe i",
-    "swe-1",
-    "swe-i",
-    "engineer 1",
-    "engineer i",
+# ==============================================================================
+# RESUME-CURATED ROLE QUALIFICATION & EXCLUSION RULES
+# ==============================================================================
+DISQUALIFIED_WORDS = {
+    # 1. Quality Assurance / Testing / SDET / Verification
+    "quality", "qa", "qc", "sdet", "test", "testing", "tester", "qualification",
+    "validation", "verification",
+
+    # 2. Firmware / Embedded / Hardware / Electronics
+    "firmware", "embedded", "microcontroller", "microprocessor", "dsp", "rtos",
+    "bsp", "fpga", "asic", "soc", "vlsi", "pcb", "hardware", "silicon",
+    "semiconductor", "chipset", "verilog", "vhdl", "bringup",
+
+    # 3. Non-software engineering disciplines
+    "manufacturing", "mechanical", "electrical", "electronic", "electronics",
+    "civil", "chemical", "aerospace", "aviation", "avionics", "automotive",
+    "structural", "industrial", "mechatronics", "optical", "optics", "acoustic",
+    "petroleum", "nuclear", "metallurgical", "biomedical", "materials",
+    "process", "welding", "piping", "thermal", "cad", "cam", "aerodynamic",
+    "chassis", "powertrain", "flight", "propulsion", "hvac", "environmental",
+    "facilities", "plant", "maintenance", "safety", "reliability",
+
+    # 4. Non-tech business domains
+    "sales", "account", "marketing", "recruiter", "recruiting", "sourcer",
+    "talent", "hr", "finance", "accounting", "auditor", "audit", "legal",
+    "counsel", "compliance", "tax", "scrum", "agile", "designer", "graphic",
+    "art", "copywriter", "helpdesk", "logistics", "warehouse", "procurement",
+    "consultant", "risk", "growth",
+
+    # 5. Seniority and management
+    "senior", "sr", "lead", "principal", "director", "manager", "head",
+    "vp", "chief", "fellow", "distinguished", "expert", "smts", "lmts",
+    "pmts", "experienced", "architect",
+}
+
+DISQUALIFIED_PHRASES = [
+    "human resources", "product manager", "project manager", "program manager",
+    "customer support", "technical support", "service desk", "supply chain",
+    "quality assurance", "quality engineer", "firmware engineer", "embedded engineer",
+    "hardware engineer", "field engineer", "network engineer", "system administrator",
+    "tech lead", "team lead",
 ]
 
-EXCLUDE = [
-    # Seniority & Experienced levels (strictly excluded for 0-exp / fresher)
-    "senior",
-    "sr.",
-    "sr ",
-    "sr-",
-    "staff",
-    "principal",
-    "lead",
-    "tech lead",
-    "team lead",
-    "architect",
-    "director",
-    "manager",
-    "head of",
-    "vp",
-    "vice president",
-    "fellow",
-    "distinguished",
-    "expert",
-    "sde ii",
-    "sde-ii",
-    "sde 2",
-    "sde-2",
-    "sde iii",
-    "sde-3",
-    "sde 3",
-    "sde iv",
-    "swe ii",
-    "swe-ii",
-    "swe 2",
-    "swe-2",
-    "swe iii",
-    "software engineer ii",
-    "software engineer 2",
-    "software engineer iii",
-    "software engineer 3",
-    "engineer ii",
-    "engineer 2",
-    "engineer iii",
-    "engineer 3",
-    "mid-level",
-    "mid level",
-    "experienced",
-    # Non-software engineering disciplines
-    "mechanical",
-    "electrical",
-    "civil",
-    "chemical",
-    "hardware",
-    "network engineer",
-    # Non-tech / Unrelated tracks
-    "sales",
-    "account executive",
-    "recruiter",
-    "sourcer",
-    "talent acquisition",
-    "marketing",
-    "legal",
-    "operations",
-    "finance",
-    "accounting",
-    "product manager",
-    "designer",
-    "ui/ux",
-    "content",
-    "hr ",
-    "human resources",
-    "business analyst",
-    "customer support",
-    "technical support",
-    "help desk",
-    "helpdesk",
-]
+LEVEL_REGEX = re.compile(
+    r"\b(?:sde|swe|mts|engineer|developer)\s*[-_ ]*(?:ii|iii|iv|v|2|3|4|5)\b"
+    r"|\b(?:level|lvl|grade|band|l)\s*[-_ ]*(?:ii|iii|iv|v|2|3|4|5|6)\b"
+    r"|\b(?:mid|mid-level|experienced)\b",
+    re.IGNORECASE,
+)
+
+STAFF_REGEX = re.compile(r"(?<!member of technical )\bstaff\b", re.IGNORECASE)
+
+TECH_ROLES_REGEX = re.compile(
+    r"\b(?:software\s+(?:engineer|developer|development\s+engineer|development|dev)"
+    r"|sde|swe|programmer"
+    r"|full[\s-]*stack(?:\s+(?:engineer|developer|dev|software))?"
+    r"|back[\s-]*end(?:\s+(?:engineer|developer|dev|software))?"
+    r"|front[\s-]*end(?:\s+(?:engineer|developer|dev|software))?"
+    r"|(?:java|spring\s*boot|spring)\s+(?:developer|engineer|software|backend|full[\s-]*stack|dev)"
+    r"|web\s+(?:developer|engineer)"
+    r"|application\s+(?:developer|software|engineer)"
+    r"|member\s+of\s+technical\s+staff|mts"
+    r"|associate\s+software|junior\s+software|graduate\s+software"
+    r"|graduate\s+engineer\s+trainee|get)\b",
+    re.IGNORECASE,
+)
+
+INTERN_INDICATORS_REGEX = re.compile(
+    r"\b(?:intern|internship|co-op|coop|trainee|apprentice|fellowship)\b",
+    re.IGNORECASE,
+)
+
+INTERN_TECH_CONTEXT_REGEX = re.compile(
+    r"\b(?:software|engineer|engineering|developer|development|sde|swe|backend|frontend|full[\s-]*stack"
+    r"|java|spring|web|tech|technology|summer|campus|student|undergraduate|computer\s+science"
+    r"|r&d|research|data\s+engineering|ai|ml|machine\s+learning|cloud|graduate)\b",
+    re.IGNORECASE,
+)
 
 INDIA_LOCATIONS = [
     "india", "bengaluru", "bangalore", "hyderabad", "pune", "delhi", "noida",
     "gurgaon", "gurugram", "chennai", "mumbai", "ahmedabad", "kolkata",
-    "remote", "anywhere", "work from home"
+    "kochi", "coimbatore", "chandigarh", "indore", "jaipur",
 ]
+
+GLOBAL_REMOTE_TOKENS = [
+    "anywhere", "worldwide", "global", "work from anywhere",
+]
+
+FOREIGN_DOMESTIC_COUNTRIES = [
+    "england", "united kingdom", "gb", "uk", "germany", "deutschland", "de",
+    "france", "fr", "canada", "ca", "australia", "au", "netherlands", "nl",
+    "poland", "pl", "spain", "es", "singapore", "sg", "ireland", "ie",
+    "sweden", "se", "italy", "it", "switzerland", "ch", "brazil", "br",
+    "japan", "jp", "united states", "usa", "us",
+]
+
+def is_qualified_role(title):
+    t = title.lower()
+    words = set(re.findall(r"[a-zA-Z0-9]+", t))
+    for p in DISQUALIFIED_PHRASES:
+        if p in t:
+            return False, f"disqualified phrase: {p}"
+    disq = words.intersection(DISQUALIFIED_WORDS)
+    if disq:
+        return False, f"disqualified word: {', '.join(disq)}"
+    if STAFF_REGEX.search(t):
+        return False, "staff role"
+    if LEVEL_REGEX.search(t):
+        return False, "mid/senior level"
+    if INTERN_INDICATORS_REGEX.search(t):
+        if INTERN_TECH_CONTEXT_REGEX.search(t):
+            return True, "qualified intern"
+        return False, "intern without tech context"
+    if TECH_ROLES_REGEX.search(t):
+        return True, "qualified software role"
+    return False, "does not match software/tech target profile"
+
+def is_target_location(location_str):
+    if not location_str:
+        return True, "unspecified"
+    loc = location_str.lower().strip()
+    if any(city in loc for city in INDIA_LOCATIONS):
+        return True, "india"
+    if any(token in loc for token in GLOBAL_REMOTE_TOKENS):
+        return True, "worldwide_remote"
+    if "remote" in loc or "work from home" in loc:
+        is_foreign = any(
+            country in loc.split() or f", {country}" in loc or f" {country}" in loc
+            for country in FOREIGN_DOMESTIC_COUNTRIES
+        )
+        if is_foreign:
+            return False, "domestic_foreign_remote"
+        return True, "generic_remote"
+    return False, "non_target_location"
 
 def parse_timing(dt_val):
     if not dt_val:
@@ -420,37 +418,23 @@ def check_company(company_name):
             return ("SmartRecruiters", s, res)
     return None
 
-MAX_AGE_HOURS = 6.0  # STRICT RULE: Throw out all postings older than 6 hours
+MAX_AGE_HOURS = 24.0
 
 def filter_job(job, require_india_loc=True, max_hours=MAX_AGE_HOURS):
-    title = job["title"].lower()
-    location = job["location"].lower()
-
-    # Title exclusions
-    if any(ex in title for ex in EXCLUDE):
+    # 1. Role capability check
+    role_ok, _ = is_qualified_role(job.get("title", ""))
+    if not role_ok:
         return False
 
-    # Title keyword match (word boundaries for intern/trainee to avoid 'internal')
-    matched_kw = False
-    for kw in KEYWORDS:
-        if kw in ["intern", "trainee"]:
-            if re.search(r"\b" + re.escape(kw) + r"\b", title):
-                matched_kw = True
-                break
-        elif kw in title:
-            matched_kw = True
-            break
-    if not matched_kw:
-        return False
-
-    # Location check
+    # 2. Location check
     if require_india_loc:
-        if not any(loc in location for loc in INDIA_LOCATIONS):
+        loc_ok, _ = is_target_location(job.get("location", ""))
+        if not loc_ok:
             return False
 
-    # STRICT 6-HOUR RULE: Throw out any job older than 6 hours or with unknown timestamp
+    # 3. Age check
     if max_hours is not None:
-        if job["age_hours"] is None or job["age_hours"] > max_hours:
+        if job.get("age_hours") is None or job["age_hours"] > max_hours or job["age_hours"] < -2.0:
             return False
 
     return True

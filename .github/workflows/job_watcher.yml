@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: read
+  contents: write
   actions: write
 
 jobs:
@@ -50,3 +50,11 @@ jobs:
         with:
           path: seen_jobs.db
           key: seen-jobs-db-${{ github.run_id }}
+
+      - name: Commit & Push Updated Seen Jobs DB
+        if: always()
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add seen_jobs.db
+          git diff --staged --quiet || (git commit -m "chore: sync seen_jobs.db [skip ci]" && git push origin main)
