@@ -38,6 +38,7 @@ import argparse
 import concurrent.futures
 import datetime
 import hashlib
+import html
 import os
 import re
 import sqlite3
@@ -493,31 +494,31 @@ def init_database(db_path=DB_PATH):
 
 
 def is_duplicate(db, job_id, clean_url_str, fingerprint, window_days=30):
-    """Check ATS ID, Base Requisition ID, canonical URL, and content fingerprint."""
+    """Check ATS ID, Base Requisition ID, canonical URL, and content fingerprint for already notified jobs."""
     cutoff = time.time() - (window_days * 86400)
 
-    # 1. Exact ATS ID match
-    if db.execute("SELECT 1 FROM seen WHERE id = ?", (job_id,)).fetchone():
+    # 1. Exact ATS ID match (already notified)
+    if db.execute("SELECT 1 FROM seen WHERE id = ? AND notified = 1", (job_id,)).fetchone():
         return True, "id"
 
-    # 2. Base ATS ID match (e.g. wd:paypal:R0138270-1 vs wd:paypal:R0138270)
+    # 2. Base ATS ID match (already notified)
     base_id = get_base_job_id(job_id)
     if base_id and base_id != job_id:
-        if db.execute("SELECT 1 FROM seen WHERE id = ?", (base_id,)).fetchone():
+        if db.execute("SELECT 1 FROM seen WHERE id = ? AND notified = 1", (base_id,)).fetchone():
             return True, "base_id"
 
-    # 3. Canonical URL match
+    # 3. Canonical URL match (already notified within rolling window)
     if clean_url_str:
         if db.execute(
-            "SELECT 1 FROM seen WHERE url = ? AND (first_seen > ? OR first_seen IS NULL)",
+            "SELECT 1 FROM seen WHERE url = ? AND notified = 1 AND (first_seen > ? OR first_seen IS NULL)",
             (clean_url_str, cutoff),
         ).fetchone():
             return True, "url"
 
-    # 4. Content Fingerprint match (within rolling 30-day window)
+    # 4. Content Fingerprint match (already notified within rolling 30-day window)
     if fingerprint:
         if db.execute(
-            "SELECT 1 FROM seen WHERE fingerprint = ? AND (first_seen > ? OR first_seen IS NULL)",
+            "SELECT 1 FROM seen WHERE fingerprint = ? AND notified = 1 AND (first_seen > ? OR first_seen IS NULL)",
             (fingerprint, cutoff),
         ).fetchone():
             return True, "fingerprint"
@@ -842,7 +843,7 @@ def matches(job, enforce_max_age=True, max_age_hours=MAX_AGE_HOURS):
 # ==============================================================================
 def notify(job, dry_run=False):
     is_intern = bool(INTERN_INDICATORS_REGEX.search(job.get("title", "")))
-    category_title = "Tech Internship Match (< 24h Old)" if is_intern else "Software Job Match (< 24h Old)"
+    category_title = "Tech Internship Match" if is_intern else "Software Job Match"
 
     text = (
         f"🎯 [New {category_title}]\n"
@@ -854,23 +855,30 @@ def notify(job, dry_run=False):
     )
     print(f"\n{text}\n")
     if dry_run:
-        return
+        return True
 
     if not (TG_TOKEN and TG_CHAT):
-        return
+        print(f"[!] Warning: Telegram bot token or chat ID is missing! Alert not sent for: {job['title']}", file=sys.stderr)
+        return False
 
     icon = "🎓" if is_intern else "🎯"
+    title_esc = html.escape(str(job.get("title", "")))
+    company_esc = html.escape(f"{job.get('company', '')} ({job.get('source', '')})")
+    location_esc = html.escape(str(job.get("location") or "Unspecified"))
+    timing_esc = html.escape(str(job.get("timing_str", "")))
+    url_esc = html.escape(str(job.get("url", "")))
+
     tg_html = (
         f"{icon} <b>New {category_title}</b>\n\n"
-        f"<b>Role:</b> {job['title']}\n"
-        f"<b>Company:</b> {job['company']} ({job['source']})\n"
-        f"<b>Location:</b> {job['location'] or 'Unspecified'}\n"
-        f"<b>Posted:</b> {job['timing_str']}\n\n"
-        f"🔗 <a href='{job['url']}'><b>Apply on Career Page</b></a>"
+        f"<b>Role:</b> {title_esc}\n"
+        f"<b>Company:</b> {company_esc}\n"
+        f"<b>Location:</b> {location_esc}\n"
+        f"<b>Posted:</b> {timing_esc}\n\n"
+        f"🔗 <a href='{url_esc}'><b>Apply on Career Page</b></a>"
     )
 
     try:
-        requests.post(
+        r = requests.post(
             f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage",
             json={
                 "chat_id": TG_CHAT,
@@ -880,8 +888,15 @@ def notify(job, dry_run=False):
             },
             timeout=10,
         )
+        if r.status_code == 200:
+            print(f"[+] Telegram alert successfully delivered to chat {TG_CHAT}")
+            return True
+        else:
+            print(f"[-] Telegram API error {r.status_code}: {r.text}", file=sys.stderr)
+            return False
     except Exception as e:
         print(f"[warn] Failed to send Telegram alert: {e}", file=sys.stderr)
+        return False
 
 
 # ==============================================================================
@@ -930,20 +945,27 @@ def poll_cycle(db, dry_run=False, max_age=MAX_AGE_HOURS, find_internships=False)
                 is_match = matches(job, enforce_max_age=True, max_age_hours=max_age)
 
                 if is_match:
-                    # Mark seen & commit BEFORE notification to prevent duplicate alerts
-                    mark_job_seen(
-                        db, job["id"], slug, fingerprint,
-                        job["title"], job.get("location", ""), norm_url, notified=1
-                    )
+                    success = notify(job, dry_run=dry_run)
+                    if not dry_run:
+                        if success:
+                            mark_job_seen(
+                                db, job["id"], slug, fingerprint,
+                                job["title"], job.get("location", ""), norm_url, notified=1
+                            )
+                        else:
+                            mark_job_seen(
+                                db, job["id"], slug, fingerprint,
+                                job["title"], job.get("location", ""), norm_url, notified=0
+                            )
                     all_matched.append(job)
-                    notify(job, dry_run=False)
                     time.sleep(0.3)  # Gentle spacing for Telegram rate limits
                 else:
                     # Record seen with notified=0 so we don't re-scan it as new
-                    mark_job_seen(
-                        db, job["id"], slug, fingerprint,
-                        job["title"], job.get("location", ""), norm_url, notified=0
-                    )
+                    if not dry_run:
+                        mark_job_seen(
+                            db, job["id"], slug, fingerprint,
+                            job["title"], job.get("location", ""), norm_url, notified=0
+                        )
 
     duration = time.time() - start_t
     print(f"[+] Completed scan of {len(tasks)} boards in {duration:.1f}s.")
@@ -1034,6 +1056,13 @@ def main():
         print(f"Telegram Bot:    Active (Chat ID: {TG_CHAT})")
     else:
         print("Telegram Bot:    Not configured (alerts will only print to console)")
+        if os.getenv("GITHUB_ACTIONS") == "true":
+            print(
+                "\n::error::TELEGRAM_BOT_TOKEN and/or TELEGRAM_CHAT_ID are not set in GitHub Repository Secrets!\n"
+                "Please configure them under: Repository Settings -> Secrets and variables -> Actions\n",
+                file=sys.stderr,
+            )
+            sys.exit(1)
     print("====================================\n")
 
     try:

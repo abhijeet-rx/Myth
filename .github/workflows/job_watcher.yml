@@ -38,6 +38,14 @@ jobs:
           restore-keys: |
             seen-jobs-db-
 
+      - name: Verify Telegram Secrets
+        run: |
+          if [ -z "${{ secrets.TELEGRAM_BOT_TOKEN }}" ] || [ -z "${{ secrets.TELEGRAM_CHAT_ID }}" ]; then
+            echo "::error::Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID in GitHub Repository Secrets!"
+            echo "Please go to: Repository Settings -> Secrets and variables -> Actions and add both secrets."
+            exit 1
+          fi
+
       - name: Run Job Watcher Pass
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
